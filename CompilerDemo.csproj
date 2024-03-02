@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Domain\**" />
+    <EmbeddedResource Remove="Domain\**" />
+    <None Remove="Domain\**" />
+    <Page Remove="Domain\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Reference.html" />
     <None Remove="Resources\Copy.png" />
     <None Remove="Resources\Create.png" />
@@ -22,13 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Reference.html">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="Resources\Copy.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

@@ -215,11 +215,13 @@
             RichTextBox rtb = ((MainWindow)System.Windows.Application.Current.MainWindow).RTB;
             rtb.SelectAll();
         }
+
         private void Reference()
         {
             var p = new Process();
-            p.StartInfo = new ProcessStartInfo("Reference.html")
+            p.StartInfo = new ProcessStartInfo
             {
+                FileName = @"..\..\..\Reference.html", // Относительный путь к файлу
                 UseShellExecute = true
             };
             p.Start();
