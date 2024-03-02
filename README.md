@@ -100,7 +100,6 @@
         <td><img src="Readme/About.png" alt="About"></td>
       </tr>
     </table>
-
     <h3>Вывод сообщений</h3>
     <table>
       <tr>
