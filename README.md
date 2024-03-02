@@ -66,8 +66,6 @@
         <td><img src="Readme/Reference.png" alt="Reference"></td>
       </tr>
     </table>
-
-
     <li value="3">Панель инструментов</li>
 	<img src="Readme/Toolbar.png" alt="Toolbar">
       <ul>
