@@ -1,14 +1,5 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <style>
-    body {
-      font-family: Times New Roman;
-      margin: 14px;
-      line-height: 1.5;
-    }
-  </style>
-</head>
 <body>
   <h1>Компилятор</h1>
   <p>Разработка текстового редактора с функциями языкового процессора.</p>
