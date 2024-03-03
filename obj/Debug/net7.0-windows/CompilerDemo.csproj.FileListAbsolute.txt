@@ -96,3 +96,4 @@ C:\Users\User\Desktop\CompilerLaboratoryNo.1\obj\Debug\net7.0-windows\refint\Com
 C:\Users\User\Desktop\CompilerLaboratoryNo.1\obj\Debug\net7.0-windows\CompilerDemo.pdb
 C:\Users\User\Desktop\CompilerLaboratoryNo.1\obj\Debug\net7.0-windows\CompilerDemo.genruntimeconfig.cache
 C:\Users\User\Desktop\CompilerLaboratoryNo.1\obj\Debug\net7.0-windows\ref\CompilerDemo.dll
+C:\Users\User\Desktop\CompilerLaboratoryNo.1\obj\Debug\net7.0-windows\GeneratedInternalTypeHelper.g.cs

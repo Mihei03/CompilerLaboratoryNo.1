@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CompilerDemo" 
+        xmlns:local="clr-namespace:CompilerDemo"
         mc:Ignorable="d"
-        Title="Laboratory №1" Height="450" Width="800"
+        Title="Компилятор" Height="450" Width="800"
         MinHeight="450" MinWidth="800" Icon="/View/Compiler.ico">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -17,13 +17,13 @@
                 <MenuItem Header="Выход" InputGestureText="Alt+F4" Command="{Binding ExitCommand}"  />
             </MenuItem>
             <MenuItem Header="Правка">
-                <MenuItem Header="Отменить" Command="{Binding UndoCommand}"/>
-                <MenuItem Header="Повторить" Command="{Binding RedoCommand}"/>
-                <MenuItem Header="Вырезать" Command="{Binding CutCommand}"/>
-                <MenuItem Header="Копировать" Command="{Binding CopyCommand}"/>
-                <MenuItem Header="Вставить" Command="{Binding PasteCommand}"/>
+                <MenuItem Header="Отменить" Command="ApplicationCommands.Undo"/>
+                <MenuItem Header="Повторить" Command="ApplicationCommands.Redo"/>
+                <MenuItem Header="Вырезать" Command="ApplicationCommands.Cut"/>
+                <MenuItem Header="Копировать" Command="ApplicationCommands.Copy"/>
+                <MenuItem Header="Вставить" Command="ApplicationCommands.Paste"/>
                 <MenuItem Header="Удалить" Command="{Binding DeleteCommand}"/>
-                <MenuItem Header="Выделить все" Command="{Binding SelectAllCommand}"/>
+                <MenuItem Header="Выделить все" Command="ApplicationCommands.SelectAll"/>
             </MenuItem>
             <MenuItem Header="Текст">
                 <MenuItem Header="Постановка задачи"/>
@@ -53,19 +53,22 @@
                 <Button Width="48" Height="50" ToolTip="Сохранить" Command="{Binding SaveCommand}">
                     <Image Source="../Resources/Save.png" Height="40" Width="38"/>
                 </Button>
-                <Button Width="48" Height="50" ToolTip="Отменить" Margin="100 0 0 0" Command="{Binding UndoCommand}">
+                <Button Width="48" Height="50" ToolTip="Отменить" Margin="100 0 0 0" Command="ApplicationCommands.Undo">
                     <Image Source="../Resources/Undo.png" Height="40" Width="38"/>
                 </Button>
-                <Button Width="48" Height="50" ToolTip="Вернуть" Command="{Binding RedoCommand}">
+                <Button Width="48" Height="50" ToolTip="Вернуть" Command="ApplicationCommands.Redo">
                     <Image Source="../Resources/Redo.png" Height="40" Width="38"/>
                 </Button>
-                <Button Width="48" Height="50" ToolTip="Копировать" Command="{Binding CopyCommand}">
+                <Button Width="48" Height="50" ToolTip="Запустить" Margin="10 0 10 0" Command="{Binding ScanCommand}">
+                    <Image Source="/View/Run.png" Height="43" Width="38"/>
+                </Button>
+                <Button Width="48" Height="50" ToolTip="Копировать" Command="ApplicationCommands.Copy">
                     <Image Source="../Resources/Copy.png" Height="40" Width="38"/>
                 </Button>
-                <Button Width="48" Height="50" ToolTip="Вырезать" Command="{Binding CutCommand}">
+                <Button Width="48" Height="50" ToolTip="Вырезать" Command="ApplicationCommands.Cut">
                     <Image Source="../Resources/Cut.png" Height="40" Width="38"/>
                 </Button>
-                <Button Width="48" Height="50" ToolTip="Вставить" Command="{Binding PasteCommand}">
+                <Button Width="48" Height="50" ToolTip="Вставить" Command="ApplicationCommands.Paste">
                     <Image Source="../Resources/Paste.png" Height="40" Width="38"/>
                 </Button>
                 <Image Source="../Resources/Size.png" Margin="20 0 0 0" Height="40" Width="38"/>
@@ -82,10 +85,16 @@
         <Grid DockPanel.Dock="Bottom" VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <RichTextBox x:Name="RTB" Margin="10,10,10,10" Padding="5" Grid.Row="0" AllowDrop="True"/>
-            <TabControl Margin="10,10,10,10" Padding="5" Grid.Row="1" >
+            <RichTextBox x:Name="RTB" Margin="10,10,10,10" Padding="5" Grid.Row="0"  AllowDrop="True"
+                         local:RichTextBoxHelper.DocumentXaml="{Binding Text}" Block.LineHeight="1"
+                         VerticalScrollBarVisibility="Visible"/>
+
+            <GridSplitter Margin="3,3,3,3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="5"/>
+
+            <TabControl Margin="10,10,10,10" Padding="5" Grid.Row="2">
                 <TabItem Header="Вывод">
                     <TextBox x:Name="TB" IsReadOnly="True" Text="Hello World!"/>
                 </TabItem>
@@ -97,6 +106,17 @@
                             <DataGridTextColumn Header="Линия"/>
                             <DataGridTextColumn Header="Столбец"/>
                             <DataGridTextColumn Header="Сообщение" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Вывод анализатора">
+                    <DataGrid IsReadOnly="True" ItemsSource="{Binding TokenViewModels}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Условный код" Binding="{Binding Code}"/>
+                            <DataGridTextColumn Header="Тип лексемы " Width="*" Binding="{Binding TokenType}"/>
+                            <DataGridTextColumn Header="Лексема" Width="*" Binding="{Binding RawToken}"/>
+                            <DataGridTextColumn Header="Начало лексемы" Width="*" Binding="{Binding StartIndex}"/>
+                            <DataGridTextColumn Header="Конец лексемы" Width="*" Binding="{Binding EndIndex}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

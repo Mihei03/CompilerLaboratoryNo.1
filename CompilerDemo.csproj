@@ -22,10 +22,12 @@
     <None Remove="Resources\Open.png" />
     <None Remove="Resources\Paste.png" />
     <None Remove="Resources\Redo.png" />
+    <None Remove="Resources\Run.png" />
     <None Remove="Resources\Save.png" />
     <None Remove="Resources\Size.png" />
     <None Remove="Resources\Undo.png" />
     <None Remove="View\Compiler.ico" />
+    <None Remove="View\Run.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -57,6 +59,7 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="View\Compiler.ico" />
+    <Resource Include="View\Run.png" />
   </ItemGroup>
 
   <ItemGroup>
