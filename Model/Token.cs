@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -8,6 +8,7 @@ namespace CompilerDemo.Model
     internal enum TokenType
     {
         Identifier = 1,
+        Complex,
         Whitespace,
         Newline,
         Assignment,
@@ -52,7 +53,7 @@ namespace CompilerDemo.Model
     {
         private static Dictionary<string, TokenType> DefaultTypes = new Dictionary<string, TokenType>()
         {
-
+            { "complex", TokenType.Complex },
             { "\n", TokenType.Newline },
             { " ", TokenType.Whitespace },
             { ",", TokenType.Comma },
