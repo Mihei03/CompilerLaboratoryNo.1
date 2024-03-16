@@ -177,5 +177,85 @@
   <h4>Тест. Пример, показывающий все возможные лексемы, которые могут быть найдены лексическим анализатором.</h4>
   <img src="bin/Debug/net7.0-windows/Readme/Test.png" alt="Тест">
 
+  <h2 id="lab3">Лабораторная работа №3: Разработка синтаксического анализатора (парсера)</h2>
+  <p>Тема: разработка синтаксического анализатора (парсера).</p>
+
+  <p>Цель работы: изучить назначение синтаксического анализатора, спроектировать алгоритм и выполнить программную реализацию парсера.</p>
+  
+  <table>
+    <tr>
+      <th>№</th>
+      <th>Тема</th>
+      <th>Пример верной строки</th>
+      <th>Справка</th>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Объявление комплексного числа с инициализацией на языке Python</td>
+      <td>z3 = complex(0, 2.5)</td>
+      <td><a href="https://stepik.org/lesson/360942/step/11">Справка</a></td>
+    </tr>
+  </table>
+
+  <a href="#lab2">Примеры допустимых строк</a>
+
+  <h3>В соответствии с вариантом задания на курсовую работу необходимо:</h3>
+    <ol>
+      <li>Разработать автоматную грамматику.</li>
+      <li>Спроектировать граф конечного автомата (перейти от автоматной грамматики к конечному автомату).</li>
+      <li>Выполнить программную реализацию алгоритма работы конечного автомата.</li>
+      <li>Встроить разработанную программу в интерфейс текстового редактора, созданного на первой лабораторной работе.</li>
+    </ol>
+
+  <h3>Грамматика</h3>
+    <pre>
+      G[<КЧ> = <Комплексное_число>]: 
+      VT = { ‘a’…’z’, ‘A’…’Z’, '=', 'complex', '(', ')', '+', 'j', '-', '0'...'9', '.', ‘_’, ‘'‘ }
+      VN = { <КЧ>, COMPLEXREM, ASSIGNTMENT, OPEN, REALPART, INTREALPART, INTREALPARTREM, DECIMALREALPART, IMAGINARYPART, DECIMALREALPARTREM, INTIMAGINARYPART, INTIMAGINARYPARTREM, DECIMALIMAGINARYPART, DECIMALIMAGINARYPARTREM, CLOSE}
+      P = {
+	    <КЧ> -> letter COMPLEXREM
+      COMPLEXREM -> (letter | _ | digit) COMPLEXREM | = ASSIGNTMENT
+      ASSIGNTMENT -> complex OPEN 
+      OPEN -> ( REALPART 
+      REALPART -> [+ | -] INTREALPART 
+      INTREALPART -> digit0 INTREALPARTREM 
+      INTREALPARTREM -> digit INTREALPARTREM | . DECIMALREALPART | , IMAGINARYPART 
+      DECIMALREALPART -> digit DECIMALREALPARTREM 
+      DECIMALREALPARTREM -> digit DECIMALREALPARTREM | , IMAGINARYPART
+      IMAGINARYPART -> [+ | -] INTIMAGINARYPART
+      INTIMAGINARYPART -> digit0 INTIMAGINARYPARTREM
+      INTIMAGINARYPARTREM -> digit INTIMAGINARYPARTREM | . DECIMALIMAGINARYPART | j CLOSE
+      DECIMALIMAGINARYPART -> digit DECIMALIMAGINARYPARTREM
+      DECIMALIMAGINARYPARTREM -> digit DECIMALIMAGINARYPARTREM | j CLOSE
+      CLOSE -> )
+      letter → ‘a’ | ‘b’ | … | ‘z’ | ‘A’ | ‘B’ | … | ‘Z’
+      digit → ‘0’ | ‘1’ | … | ‘9’
+      digit0 →  ‘1’ | … | ‘9’
+       }
+    </pre>
+
+  <h3>Граф конечного автомата</h3>
+  <img src="bin/Debug/net7.0-windows/Readme/Graph.png" alt="Граф конечного автомата">
+
+  <h3>Тестовые примеры</h3>
+  <h4>Тест №1. Все выражения написаны корректно.</h4>
+  <img src="" alt="Тест">
+  <h4>Тест №2. Пример ошибок.</h4>
+  <img src="" alt="Тест">
+
+  <h2 id="lab4">Лабораторная работа №4: Нейтрализация ошибок (метод Айронса)</h2>
+  <p>Тема: нейтрализация ошибок (метод Айронса).</p>
+
+  <p>Цель работы: реализовать алгоритм нейтрализации синтаксических ошибок и дополнить им программную реализацию парсера.</p>
+  
+  <h3>Граф конечного автомата</h3>
+  
+  <p>Разрабатываемый синтаксический анализатор построен на базе автоматной грамматики. При нахождении лексемы, которая не соответствует грамматике предлагается свести алгоритм нейтрализации к последовательному удалению следующего символа во входной цепочке до тех пор, пока следующий символ не окажется одним из допустимых в данный момент разбора.</p>
+  
+  <h3>Тестовые примеры</h3>
+  <h4>Тест №1. Пример ошибок.</h4>
+  <img src="" alt="Тест">
+
 </body>
 </html>
+

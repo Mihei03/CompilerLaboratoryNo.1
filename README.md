@@ -200,29 +200,29 @@
       VT = { ‘a’…’z’, ‘A’…’Z’, '=', 'complex', '(', ')', '+', 'j', '-', '0'...'9', '.', ‘_’, ‘'‘ }
       VN = { <КЧ>, COMPLEXREM, ASSIGNTMENT, OPEN, REALPART, INTREALPART, INTREALPARTREM, DECIMALREALPART, IMAGINARYPART, DECIMALREALPARTREM, INTIMAGINARYPART, INTIMAGINARYPARTREM, DECIMALIMAGINARYPART, DECIMALIMAGINARYPARTREM, CLOSE}
       P = {
-	<КЧ> -> letter COMPLEXREM
-	COMPLEXREM -> (letter | _ | digit) COMPLEXREM | = ASSIGNTMENT
-	ASSIGNTMENT -> complex OPEN 
-	OPEN -> ( REALPART 
-	REALPART -> [+ | -] INTREALPART 
-	INTREALPART -> digit0 INTREALPARTREM 
-	INTREALPARTREM -> digit INTREALPARTREM | . DECIMALREALPART | , IMAGINARYPART 
-	DECIMALREALPART -> digit DECIMALREALPARTREM 
-	DECIMALREALPARTREM -> digit DECIMALREALPARTREM | , IMAGINARYPART
-	IMAGINARYPART -> [+ | -] INTIMAGINARYPART
-	INTIMAGINARYPART -> digit0 INTIMAGINARYPARTREM
-	INTIMAGINARYPARTREM -> digit INTIMAGINARYPARTREM | . DECIMALIMAGINARYPART | j CLOSE
-	DECIMALIMAGINARYPART -> digit DECIMALIMAGINARYPARTREM
-	DECIMALIMAGINARYPARTREM -> digit DECIMALIMAGINARYPARTREM | j CLOSE
-	CLOSE -> )
-	letter → ‘a’ | ‘b’ | … | ‘z’ | ‘A’ | ‘B’ | … | ‘Z’
-	digit → ‘0’ | ‘1’ | … | ‘9’
-	digit0 →  ‘1’ | … | ‘9’
+	    <КЧ> -> letter COMPLEXREM
+      COMPLEXREM -> (letter | _ | digit) COMPLEXREM | = ASSIGNTMENT
+      ASSIGNTMENT -> complex OPEN 
+      OPEN -> ( REALPART 
+      REALPART -> [+ | -] INTREALPART 
+      INTREALPART -> digit0 INTREALPARTREM 
+      INTREALPARTREM -> digit INTREALPARTREM | . DECIMALREALPART | , IMAGINARYPART 
+      DECIMALREALPART -> digit DECIMALREALPARTREM 
+      DECIMALREALPARTREM -> digit DECIMALREALPARTREM | , IMAGINARYPART
+      IMAGINARYPART -> [+ | -] INTIMAGINARYPART
+      INTIMAGINARYPART -> digit0 INTIMAGINARYPARTREM
+      INTIMAGINARYPARTREM -> digit INTIMAGINARYPARTREM | . DECIMALIMAGINARYPART | j CLOSE
+      DECIMALIMAGINARYPART -> digit DECIMALIMAGINARYPARTREM
+      DECIMALIMAGINARYPARTREM -> digit DECIMALIMAGINARYPARTREM | j CLOSE
+      CLOSE -> )
+      letter → ‘a’ | ‘b’ | … | ‘z’ | ‘A’ | ‘B’ | … | ‘Z’
+      digit → ‘0’ | ‘1’ | … | ‘9’
+      digit0 →  ‘1’ | … | ‘9’
        }
     </pre>
 
   <h3>Граф конечного автомата</h3>
-  <img src="" alt="Граф конечного автомата">
+  <img src="bin/Debug/net7.0-windows/Readme/Graph.png" alt="Граф конечного автомата">
 
   <h3>Тестовые примеры</h3>
   <h4>Тест №1. Все выражения написаны корректно.</h4>
