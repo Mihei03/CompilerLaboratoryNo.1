@@ -114,11 +114,10 @@
                 <TabItem Header="Вывод парсера">
                     <DataGrid IsReadOnly="True" ItemsSource="{Binding ParsingErrors}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Номер ошибки" Width="auto" Binding="{Binding NumberOfError}"/>
                             <DataGridTextColumn Header="Начало" Width="auto" Binding="{Binding StartPos}"/>
                             <DataGridTextColumn Header="Конец" Width="auto" Binding="{Binding EndPos}"/>
-                            <DataGridTextColumn Header="Сообщение" Width="auto" Binding="{Binding Message}"/>
-                            <DataGridTextColumn Header="Токен" Width="auto" Binding="{Binding ExpectedToken}"/>
+                            <DataGridTextColumn Header="Ожидалось" Width="auto" Binding="{Binding ExpectedTokenType}"/>
+                            <DataGridTextColumn Header="Пропущено" Width="auto" Binding="{Binding DiscardedFragment}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

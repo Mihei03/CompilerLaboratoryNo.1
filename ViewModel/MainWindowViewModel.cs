@@ -1,4 +1,5 @@
 ﻿using CompilerDemo.Model;
+using CompilerDemo.Model.Parser;
 using CompilerDemo.View;
 using Microsoft.Win32;
 using System;
@@ -6,10 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace CompilerDemo.ViewModel
@@ -21,7 +19,7 @@ namespace CompilerDemo.ViewModel
         private Lexer _lexer = new Lexer(); 
         private Parser _parser = new Parser();
         private ObservableCollection<TokenViewModel> _tokenViewModels= new ObservableCollection<TokenViewModel>();
-        private ObservableCollection<ParsingError> _parsingError = new ObservableCollection<ParsingError>();
+        private ObservableCollection<ParseError> _parsingError = new ObservableCollection<ParseError>();
 
 
         public string Text
@@ -43,7 +41,6 @@ namespace CompilerDemo.ViewModel
 
         public MainWindowViewModel()
         {
-            NeutralizationCommand = new RelayCommand(Neutralization);
             RunCommand = new RelayCommand(Run);
             CreateCommand = new RelayCommand(Create);
             OpenCommand = new RelayCommand(TryOpen);
@@ -55,34 +52,6 @@ namespace CompilerDemo.ViewModel
             AboutProgramCommand = new RelayCommand(AboutProgram);
         }
 
-        private void Neutralization() 
-        {
-            if (ParsingErrors == null) return;
-
-            for (int i = 0; i < ParsingErrors.Count; i++)
-            {
-                switch (ParsingErrors[i].ExpectedToken)
-                {
-                    case "{":
-                        Text += "}";
-                        ParsingErrors.RemoveAt(i);
-                        break;
-
-                    case "(*":
-                        Text += "*)";
-                        ParsingErrors.RemoveAt(i);
-                        break;
-
-                    case "":
-                        break;
-                    // }, *), //
-                    default:
-                        Text.Remove(ParsingErrors[i].StartPos, ParsingErrors[i].EndPos - ParsingErrors[i].StartPos);
-                        ParsingErrors.RemoveAt(i);
-                        break;
-                }
-            }
-        }
         private void Run()
         { 
             Scan();
@@ -91,8 +60,8 @@ namespace CompilerDemo.ViewModel
         private void Parse()
         {
             ParsingErrors.Clear();
-            List<ParsingError> errorList = _parser.Parse(TokenViewModels);
-            foreach (ParsingError error in errorList)
+            List<ParseError> errorList = _parser.Parse(Text);
+            foreach (ParseError error in errorList)
             {
                 ParsingErrors.Add(error);
             }
@@ -251,7 +220,7 @@ namespace CompilerDemo.ViewModel
             get { return _tokenViewModels; }
             set { _tokenViewModels = value; OnPropertyChanged(); }
         }
-        public ObservableCollection<ParsingError> ParsingErrors
+        public ObservableCollection<ParseError> ParsingErrors
         {
             get { return _parsingError; }
             set { _parsingError = value; OnPropertyChanged(); }
