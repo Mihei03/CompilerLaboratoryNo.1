@@ -8,17 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Domain\**" />
-    <EmbeddedResource Remove="Domain\**" />
-    <None Remove="Domain\**" />
-    <Page Remove="Domain\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Reference.html" />
+    <None Remove="Resources\Compiler.ico" />
     <None Remove="Resources\Copy.png" />
     <None Remove="Resources\Create.png" />
     <None Remove="Resources\Cut.png" />
+    <None Remove="Resources\Neutralization.png" />
     <None Remove="Resources\Open.png" />
     <None Remove="Resources\Paste.png" />
     <None Remove="Resources\Redo.png" />
@@ -27,10 +22,13 @@
     <None Remove="Resources\Size.png" />
     <None Remove="Resources\Undo.png" />
     <None Remove="View\Compiler.ico" />
-    <None Remove="View\Run.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Reference.html">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\Compiler.ico" />
     <Resource Include="Resources\Copy.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -49,6 +47,9 @@
     <Resource Include="Resources\Redo.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Resources\Run.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\Save.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -58,10 +59,16 @@
     <Resource Include="Resources\Undo.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="View\Compiler.ico" />
-    <Resource Include="View\Run.png" />
+	  <PackageReference Include="Material.Icons" Version="2.1.6" />
+	  <PackageReference Include="Material.Icons.WPF" Version="2.1.0" />
+	  <PackageReference Include="MaterialDesignExtensions" Version="4.0.0-a02" />
+	  <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
+	  <PackageReference Include="MaterialDesignColors" Version="2.1.4" />
+	  <PackageReference Include="MaterialDesignThemes.MahApps" Version="0.3.0" />
   </ItemGroup>
 
+	
+	
   <ItemGroup>
     <Page Update="View\MainWindow.xaml">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

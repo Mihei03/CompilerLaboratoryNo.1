@@ -150,11 +150,9 @@
 
   <h3>Примеры допустимых строк</h3>
   <pre>
-    z1 = -3 + 2.5j              # создание на основе литерала
-    z2 = complex(6, -8)       # z2 = 6 - 8j
-    z3 = complex(0, 2.5)      # z3 = 2.5j
-    z4 = complex(5, 0)        # z4 = 5 + 0j
-    z5 = complex('3+4j')      # создание на основе строки
+    z2 = complex(6, -8j)       # z2 = 6 - 8j
+    z3 = complex(1, 2.5)      # z3 = 1 + 2.5j
+    z4 = complex(5, 2)        # z4 = 5 + 2j
   </pre>
 
   <h3>Диаграмма состояний сканера</h3>
@@ -179,7 +177,7 @@
     <tr>
       <td>3</td>
       <td>Объявление комплексного числа с инициализацией на языке Python</td>
-      <td>z3 = complex(0, 2.5)</td>
+      <td>z3 = complex(1, 2.5j)</td>
       <td><a href="https://stepik.org/lesson/360942/step/11">Справка</a></td>
     </tr>
   </table>
@@ -211,9 +209,9 @@
       DECIMALREALPARTREM -> digit DECIMALREALPARTREM | , IMAGINARYPART
       IMAGINARYPART -> [+ | -] INTIMAGINARYPART
       INTIMAGINARYPART -> digit0 INTIMAGINARYPARTREM
-      INTIMAGINARYPARTREM -> digit INTIMAGINARYPARTREM | . DECIMALIMAGINARYPART | j CLOSE
+      INTIMAGINARYPARTREM -> digit INTIMAGINARYPARTREM | . DECIMALIMAGINARYPART | j CLOSE | CLOSE 
       DECIMALIMAGINARYPART -> digit DECIMALIMAGINARYPARTREM
-      DECIMALIMAGINARYPARTREM -> digit DECIMALIMAGINARYPARTREM | j CLOSE
+      DECIMALIMAGINARYPARTREM -> digit DECIMALIMAGINARYPARTREM | j CLOSE | CLOSE 
       CLOSE -> )
       letter → ‘a’ | ‘b’ | … | ‘z’ | ‘A’ | ‘B’ | … | ‘Z’
       digit → ‘0’ | ‘1’ | … | ‘9’
@@ -222,7 +220,7 @@
     </pre>
 
   <h3>Граф конечного автомата</h3>
-  <img src="bin/Debug/net7.0-windows/Readme/Graph.png" alt="Граф конечного автомата">
+  <img src="bin/Debug/net7.0-windows/Readme/Graph1.png" alt="Граф конечного автомата">
 
   <h3>Тестовые примеры</h3>
   <h4>Тест №1. Все выражения написаны корректно.</h4>

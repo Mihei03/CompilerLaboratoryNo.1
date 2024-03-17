@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CompilerDemo.View"
         mc:Ignorable="d"
-        Title="About Program" Height="500" Width="900" Icon="/View/Compiler.ico">
+        Title="About Program" Height="500" Width="900" Icon="/Resources/Compiler.ico">
     <Grid>
         <TextBlock HorizontalAlignment="Center" Text="О программе" Margin="10" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" />
 

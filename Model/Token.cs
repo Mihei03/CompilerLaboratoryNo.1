@@ -1,11 +1,13 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace CompilerDemo.Model
 {
-    internal enum TokenType
+    public enum TokenType 
     {
         Identifier = 1,
         Complex,
@@ -23,7 +25,8 @@ namespace CompilerDemo.Model
         Plus,
         Apostrophe,
         StringLiteral,
-
+        ComplexLiteral,
+        ImaginaryLiteral,
 
         Less,
         Greater,
@@ -40,7 +43,7 @@ namespace CompilerDemo.Model
         Not,
         True,
         False,
-
+        Number,
         If,
         Else,
         For,
@@ -49,7 +52,7 @@ namespace CompilerDemo.Model
         Invalid
     }
 
-    internal class Token
+    public class Token
     {
         private static Dictionary<string, TokenType> DefaultTypes = new Dictionary<string, TokenType>()
         {
@@ -104,7 +107,17 @@ namespace CompilerDemo.Model
         public static bool DefaultTokenExists(string rawToken)
             => DefaultTypes.ContainsKey(rawToken);
         private static bool IsIdentifier(string rawToken)
-            => rawToken.Length != 0 && (char.IsLetter(rawToken.First()) || rawToken.First() == '_');
+        {
+            return rawToken.Length != 0 && (char.IsLetter(rawToken.First()) || rawToken.First() == '_') && !DefaultTokenExists(rawToken);
+        }
+        private static bool IsComplexLiteral(string rawToken)
+        {
+            return rawToken.StartsWith("complex(") && rawToken.EndsWith(")");
+        }
+        private static bool IsImaginaryLiteral(string rawToken)
+        {
+            return rawToken.EndsWith("j");
+        }
         private static bool IsIntegerLiteral(string rawToken)
             => int.TryParse(rawToken, out int _) && !rawToken.StartsWith("0.");
         private static bool IsDoubleLiteral(string rawToken)
@@ -121,15 +134,26 @@ namespace CompilerDemo.Model
                 return DefaultTypes[rawToken];
             }
 
+            if (IsComplexLiteral(rawToken))
+            {
+                return TokenType.ComplexLiteral;
+            }
+
+            if (IsImaginaryLiteral(rawToken))
+            {
+                return TokenType.ImaginaryLiteral;
+            }
+
+            if (DefaultTokenExists(rawToken))
+            {
+                return DefaultTypes[rawToken];
+            }
+
             if (IsStringLiteral(rawToken))
             {
                 return TokenType.StringLiteral;
             }
 
-            if (IsIdentifier(rawToken))
-            {
-                return TokenType.Identifier;
-            }
             if (rawToken.EndsWith("j"))
             {
                 if (int.TryParse(rawToken.Trim('j'), out _))
