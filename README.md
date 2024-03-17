@@ -224,9 +224,9 @@
 
   <h3>Тестовые примеры</h3>
   <h4>Тест №1. Все выражения написаны корректно.</h4>
-  <img src="bin/Debug/net7.0-windows/Readme/Test1.png" alt="Тест">
+  <img src="bin/Debug/net7.0-windows/Readme/Test1.png" alt="Тест1">
   <h4>Тест №2. Пример ошибок.</h4>
-  <img src="bin/Debug/net7.0-windows/Readme/Test2.png" alt="Тест">
+  <img src="bin/Debug/net7.0-windows/Readme/Test2.png" alt="Тест2">
 
   <h2 id="lab4">Лабораторная работа №4: Нейтрализация ошибок (метод Айронса)</h2>
   <p>Тема: нейтрализация ошибок (метод Айронса).</p>
