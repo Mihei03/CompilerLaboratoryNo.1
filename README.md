@@ -221,7 +221,6 @@
 
   <h3>Граф конечного автомата</h3>
   <img src="bin/Debug/net7.0-windows/Readme/Graph.png" alt="Граф конечного автомата">
-
   <h3>Тестовые примеры</h3>
   <h4>Тест №1. Все выражения написаны корректно.</h4>
   <img src="bin/Debug/net7.0-windows/Readme/Test1.png" alt="Тест1">
