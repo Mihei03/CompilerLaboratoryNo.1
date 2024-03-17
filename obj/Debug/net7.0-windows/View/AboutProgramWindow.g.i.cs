@@ -53,7 +53,7 @@ namespace CompilerDemo.View {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/CompilerDemo;V1.0.0.0;component/view/aboutprogramwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/CompilerDemo;component/view/aboutprogramwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\View\AboutProgramWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

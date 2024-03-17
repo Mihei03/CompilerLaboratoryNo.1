@@ -47,11 +47,7 @@ namespace CompilerDemo.Model.Parser.States
                 }
                 symbol = code[position];
 
-<<<<<<< Updated upstream
-                if (!char.IsDigit(symbol) && symbol != '.')
-=======
                 if (!char.IsDigit(symbol) && symbol != '.' && symbol != ')')
->>>>>>> Stashed changes
                 {
                     errorBuffer.Append(symbol);
                     code.Remove(position);
@@ -67,8 +63,6 @@ namespace CompilerDemo.Model.Parser.States
                     position++;
                     break;
                 }
-<<<<<<< Updated upstream
-=======
                 else if (symbol == ')')
                 {
                     if (errorBuffer.Length > 0)
@@ -82,7 +76,6 @@ namespace CompilerDemo.Model.Parser.States
                     parser.State.Handle(parser, code, position);
                     return;
                 }
->>>>>>> Stashed changes
                 else
                 {
                     if (errorBuffer.Length > 0)
