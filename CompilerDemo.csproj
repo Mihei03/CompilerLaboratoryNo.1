@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Model\ParserStates\**" />
+    <EmbeddedResource Remove="Model\ParserStates\**" />
+    <None Remove="Model\ParserStates\**" />
+    <Page Remove="Model\ParserStates\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Reference.html" />
     <None Remove="Resources\Compiler.ico" />
     <None Remove="Resources\Copy.png" />
