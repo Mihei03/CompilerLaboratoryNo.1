@@ -11,11 +11,17 @@ namespace CompilerDemo.ViewModel
     {
         private readonly Action _execute;
         private readonly Func<bool> _canExecute;
+        private ICommand? cleanCommand;
 
         public RelayCommand(Action execute, Func<bool> canExecute = null)
         {
             _execute = execute;
             _canExecute = canExecute;
+        }
+
+        public RelayCommand(ICommand? cleanCommand)
+        {
+            this.cleanCommand = cleanCommand;
         }
 
         public bool CanExecute(object parameter)

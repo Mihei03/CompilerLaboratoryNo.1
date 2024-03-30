@@ -2,6 +2,6 @@
 {
     internal interface IState
     {
-        void Handle(Parser parser, string code, int position);
+        string Handle(Parser parser, string code, int position);
     }
 }

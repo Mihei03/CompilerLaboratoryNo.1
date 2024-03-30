@@ -13,13 +13,13 @@ namespace CompilerDemo.Model.Parser
             State = new ComplexState();
         }
 
-        public List<ParseError> Parse(string code)
+        public (List<ParseError>,string) Parse(string code)
         {
             code = code.Replace("\r", string.Empty);
             Errors.Clear();
             State = new IdentifierState();
-            State.Handle(this, code, 0);
-            return Errors;
+            string cleanCode = State.Handle(this, code, 0);
+            return (Errors, cleanCode);
         }
 
         public void AddError(ParseError error)

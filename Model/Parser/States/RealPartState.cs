@@ -4,7 +4,7 @@ namespace CompilerDemo.Model.Parser.States
 {
     internal class RealPartState : IState
     {
-        public void Handle(Parser parser, string code, int position)
+        public string Handle(Parser parser, string code, int position)
         {
             char symbol;
             StringBuilder errorBuffer = new StringBuilder();
@@ -14,14 +14,14 @@ namespace CompilerDemo.Model.Parser.States
                 if (position >= code.Length)
                 {
                     parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                    return;
+                    return code;
                 }
 
                 char c = code[position];
                 if (!char.IsDigit(c) && c != '+' && c != '-')
                 {
                     errorBuffer.Append(c);
-                    code.Remove(position);
+                    code = code.Remove(position, 1);
                 }
                 else
                 {
@@ -34,7 +34,6 @@ namespace CompilerDemo.Model.Parser.States
                     position++;
                     break;
                 }
-                position++;
             }
 
             errorBuffer.Clear();
@@ -43,14 +42,14 @@ namespace CompilerDemo.Model.Parser.States
                 if (position >= code.Length)
                 {
                     parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                    return;
+                    return code;
                 }
 
                 symbol = code[position];
                 if (!char.IsDigit(symbol) && symbol != '.' && symbol != ',')
                 {
                     errorBuffer.Append(symbol);
-                    code.Remove(position);
+                    code = code.Remove(position,1);
                 }
                 else if(symbol == '.')
                 {
@@ -74,7 +73,7 @@ namespace CompilerDemo.Model.Parser.States
                     position++;
                     parser.State = new ImaginaryPartState();
                     parser.State.Handle(parser, code, position);
-                    return;
+                    return code;
                 }
                 else
                 {
@@ -83,9 +82,8 @@ namespace CompilerDemo.Model.Parser.States
                         parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "real number", errorBuffer.ToString()));
                         errorBuffer.Clear();
                     }
+                    position++;
                 }
-
-                position++;
             }
 
             errorBuffer.Clear();
@@ -96,7 +94,7 @@ namespace CompilerDemo.Model.Parser.States
                 if (!char.IsDigit(symbol) && symbol != ',')
                 {
                     errorBuffer.Append(symbol);
-                    code.Remove(position);
+                    code = code.Remove(position, 1);
                 }
                 else if(symbol == ',')
                 {
@@ -116,13 +114,12 @@ namespace CompilerDemo.Model.Parser.States
                         parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "real number", errorBuffer.ToString()));
                         errorBuffer.Clear();
                     }
+                    position++;
                 }
-
-                position++;
             }
 
             parser.State = new ImaginaryPartState();
-            parser.State.Handle(parser, code, position);
+            return parser.State.Handle(parser, code, position);
         }
     }
 }

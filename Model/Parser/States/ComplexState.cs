@@ -4,12 +4,12 @@ namespace CompilerDemo.Model.Parser.States
 {
     internal class ComplexState : IState
     {
-        public void Handle(Parser parser, string code, int position)
+        public string Handle(Parser parser, string code, int position)
         {
             if (position >= code.Length)
             {
                 parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                return;
+                return code;
             }
 
             string whitespaceCharacters = " \n\r\t";
@@ -19,13 +19,12 @@ namespace CompilerDemo.Model.Parser.States
                 if (position >= code.Length)
                 {
                     parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                    return;
+                    return code;
                 }
-
             }
+            code = code.Insert(position, " ");
 
-
-            string expected = "complex(";
+            string expected = " complex(";
 
             StringBuilder errorBuffer = new StringBuilder();
             for (int expectedPos = 0; expectedPos < expected.Length; expectedPos++)
@@ -33,7 +32,7 @@ namespace CompilerDemo.Model.Parser.States
                 if (position >= code.Length)
                 {
                     parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                    return;
+                    return code;
                 }
 
                 if (expected[expectedPos] != code[position])
@@ -55,7 +54,7 @@ namespace CompilerDemo.Model.Parser.States
             }
 
             parser.State = new RealPartState();
-            parser.State.Handle(parser, code, position);
+            return parser.State.Handle(parser, code, position);
         }
     }
 }

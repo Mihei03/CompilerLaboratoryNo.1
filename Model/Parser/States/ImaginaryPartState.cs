@@ -4,7 +4,7 @@ namespace CompilerDemo.Model.Parser.States
 {
     internal class ImaginaryPartState : IState
     {
-        public void Handle(Parser parser, string code, int position)
+        public string Handle(Parser parser, string code, int position)
         {   
             char symbol;
             StringBuilder errorBuffer = new StringBuilder();
@@ -14,14 +14,14 @@ namespace CompilerDemo.Model.Parser.States
                 if (position >= code.Length)
                 {
                     parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                    return;
+                    return code;
                 }
 
                 char c = code[position];
                 if (!char.IsDigit(c) && c != '+' && c != '-')
                 {
                     errorBuffer.Append(c);
-                    code.Remove(position);
+                    code = code.Remove(position, 1);
                 }
                 else
                 {
@@ -34,7 +34,6 @@ namespace CompilerDemo.Model.Parser.States
                     position++;
                     break;
                 }
-                position++;
             }
 
             errorBuffer.Clear();
@@ -43,20 +42,20 @@ namespace CompilerDemo.Model.Parser.States
                 if (position >= code.Length)
                 {
                     parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                    return;
+                    return code;
                 }
-                symbol = code[position];
 
+                symbol = code[position];
                 if (!char.IsDigit(symbol) && symbol != '.' && symbol != ')')
                 {
                     errorBuffer.Append(symbol);
-                    code.Remove(position);
+                    code = code.Remove(position, 1);
                 }
                 else if (symbol == '.')
                 {
                     if (errorBuffer.Length > 0)
                     {
-                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "real number", errorBuffer.ToString()));
+                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "imaginary number", errorBuffer.ToString()));
                         errorBuffer.Clear();
                     }
 
@@ -67,25 +66,24 @@ namespace CompilerDemo.Model.Parser.States
                 {
                     if (errorBuffer.Length > 0)
                     {
-                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "real number", errorBuffer.ToString()));
+                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "imaginary number", errorBuffer.ToString()));
                         errorBuffer.Clear();
                     }
 
                     position++;
                     parser.State = new EndState();
                     parser.State.Handle(parser, code, position);
-                    return;
+                    return code;
                 }
                 else
                 {
                     if (errorBuffer.Length > 0)
                     {
-                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "real number", errorBuffer.ToString()));
+                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "imaginary number", errorBuffer.ToString()));
                         errorBuffer.Clear();
                     }
+                    position++;
                 }
-
-                position++;
             }
 
             errorBuffer.Clear();
@@ -96,13 +94,13 @@ namespace CompilerDemo.Model.Parser.States
                 if (!char.IsDigit(symbol) && symbol != ')')
                 {
                     errorBuffer.Append(symbol);
-                    code.Remove(position);
+                    code = code.Remove(position,1);
                 }
                 else if (symbol == ')')
                 {
                     if (errorBuffer.Length > 0)
                     {
-                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "real number", errorBuffer.ToString()));
+                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "imaginary number", errorBuffer.ToString()));
                         errorBuffer.Clear();
                     }
 
@@ -113,16 +111,15 @@ namespace CompilerDemo.Model.Parser.States
                 {
                     if (errorBuffer.Length > 0)
                     {
-                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "real number", errorBuffer.ToString()));
+                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "imaginary number", errorBuffer.ToString()));
                         errorBuffer.Clear();
                     }
+                    position++;
                 }
-
-                position++;
             }
 
             parser.State = new EndState();
-            parser.State.Handle(parser, code, position);
+            return parser.State.Handle(parser, code, position);
         }
     }
 }

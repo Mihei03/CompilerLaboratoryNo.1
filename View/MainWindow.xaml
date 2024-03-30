@@ -28,14 +28,14 @@
                 <MenuItem Header="Выделить все" Command="ApplicationCommands.SelectAll"/>
             </MenuItem>
             <MenuItem Header="Текст">
-                <MenuItem Header="Постановка задачи"/>
-                <MenuItem Header="Грамматика"/>
-                <MenuItem Header="Классификация грамматики"/>
-                <MenuItem Header="Метод анализа"/>
-                <MenuItem Header="Диагностика и нейтрализация ошибок"/>
-                <MenuItem Header="Тестовый пример"/>
-                <MenuItem Header="Список литературы"/>
-                <MenuItem Header="Исходный код программы"/>
+                <MenuItem Header="Постановка задачи" Command="{Binding FormulationCommand}"/>
+                <MenuItem Header="Грамматика" Command="{Binding GrammarCommand}"/>
+                <MenuItem Header="Классификация грамматики" Command="{Binding ClassificationCommand}"/>
+                <MenuItem Header="Метод анализа" Command="{Binding AnalysisCommand}"/>
+                <MenuItem Header="Диагностика и нейтрализация ошибок" Command="{Binding DiagnosticsCommand}"/>
+                <MenuItem Header="Тестовый пример" Command="{Binding TestCommand}"/>
+                <MenuItem Header="Список литературы" Command="{Binding LiteratureCommand}"/>
+                <MenuItem Header="Исходный код программы" Command="{Binding InfoCommand}"/>
             </MenuItem>
             <MenuItem Header="Пуск"/>
             <MenuItem Header="Справка">
@@ -61,7 +61,7 @@
                 <Button Width="48" Height="50" ToolTip="Вернуть" Command="ApplicationCommands.Redo" Padding="0">
                     <Image Source="../Resources/Redo.png" Height="40" Width="38"/>
                 </Button>
-                <Button Width="48" Height="50" ToolTip="Запустить" Margin="10 0 10 0" Padding="0" Command="{Binding RunCommand}">
+                <Button  Width="48" Height="50" ToolTip="Запустить" Margin="10 0 10 0" Padding="0" Command="{Binding RunCommand}">
                     <Image Source="../Resources/Run.png" Height="40" Width="38"/>
                 </Button>
                 <Button Width="48" Height="50" ToolTip="Копировать" Command="ApplicationCommands.Copy" Padding="0">
@@ -81,6 +81,11 @@
                     <ComboBoxItem Content="16"/>
                     <ComboBoxItem Content="18"/>
                 </ComboBox>
+
+                <Separator/>
+
+                <Button Click="CleanButton_Click">
+                </Button>
             </ToolBar>
         </ToolBarTray>
 

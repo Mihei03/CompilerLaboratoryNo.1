@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CompilerDemo.ViewModel
 {
@@ -20,7 +21,8 @@ namespace CompilerDemo.ViewModel
         private Parser _parser = new Parser();
         private ObservableCollection<TokenViewModel> _tokenViewModels= new ObservableCollection<TokenViewModel>();
         private ObservableCollection<ParseError> _parsingError = new ObservableCollection<ParseError>();
-
+        public string CleanText;
+        public bool CanClean { get; set; }
 
         public string Text
         {
@@ -36,6 +38,14 @@ namespace CompilerDemo.ViewModel
         public ICommand SaveAsCommand { get; }
         public ICommand DeleteCommand { get; }
         public ICommand ExitCommand { get; }
+        public ICommand FormulationCommand { get; }
+        public ICommand GrammarCommand { get; }
+        public ICommand ClassificationCommand { get; }
+        public ICommand AnalysisCommand { get; }
+        public ICommand DiagnosticsCommand { get; }
+        public ICommand TestCommand { get; }
+        public ICommand LiteratureCommand { get; }
+        public ICommand InfoCommand { get; }
         public ICommand ReferenceCommand { get; }
         public ICommand AboutProgramCommand { get; }
 
@@ -48,9 +58,17 @@ namespace CompilerDemo.ViewModel
             SaveAsCommand = new RelayCommand(SaveAs);
             DeleteCommand = new RelayCommand(Delete);
             ExitCommand = new RelayCommand(Exit);
+            FormulationCommand = new RelayCommand(Formulation);
+            GrammarCommand = new RelayCommand(Grammar);
+            ClassificationCommand = new RelayCommand(Classification);
+            AnalysisCommand = new RelayCommand(Analysis);
+            DiagnosticsCommand = new RelayCommand(Diagnostics);
+            TestCommand = new RelayCommand(Test);
+            LiteratureCommand = new RelayCommand(Literature);
+            InfoCommand = new RelayCommand(Info);
             ReferenceCommand = new RelayCommand(Reference);
             AboutProgramCommand = new RelayCommand(AboutProgram);
-        }
+        }   
 
         private void Run()
         { 
@@ -60,7 +78,8 @@ namespace CompilerDemo.ViewModel
         private void Parse()
         {
             ParsingErrors.Clear();
-            List<ParseError> errorList = _parser.Parse(Text);
+            (List<ParseError> errorList, CleanText) = _parser.Parse(Text);
+            CanClean = true;
             foreach (ParseError error in errorList)
             {
                 ParsingErrors.Add(error);
@@ -204,6 +223,78 @@ namespace CompilerDemo.ViewModel
         {
             var p = new Process();
             p.StartInfo = new ProcessStartInfo(@"..\..\..\Reference.html")
+            {
+                UseShellExecute = true
+            };
+            p.Start();
+        }
+        private void Formulation()
+        {
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo(@"..\..\..\html\FormulationOfTheProblem.html")
+            {
+                UseShellExecute = true
+            };
+            p.Start();
+        }
+        private void Grammar()
+        {
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo(@"..\..\..\html\Grammar.html")
+            {
+                UseShellExecute = true
+            };
+            p.Start();
+        }
+        private void Classification()
+        {
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo(@"..\..\..\html\ClassificationOfGrammar.html")
+            {
+                UseShellExecute = true
+            };
+            p.Start();
+        }
+        private void Analysis()
+        {
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo(@"..\..\..\html\MethodOfAnalysis.html")
+            {
+                UseShellExecute = true
+            };
+            p.Start();
+        }
+        private void Diagnostics()
+        {
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo(@"..\..\..\html\DiagnosticsAndNeutralizationOfErrors.html")
+            {
+                UseShellExecute = true
+            };
+            p.Start();
+        }
+        private void Test()
+        {
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo(@"..\..\..\html\correct_test_case.txt")
+            {
+                UseShellExecute = true
+            };
+            p.Start();
+        }
+        private void Literature()
+        {
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo(@"..\..\..\html\ListOfLiterature.html")
+            {
+                UseShellExecute = true
+            };
+            p.Start();
+        }
+        private void Info()
+        {
+            var p = new Process();
+            p.StartInfo = new ProcessStartInfo(@"https://github.com/Mihei03/CompilerLaboratoryNo.1?tab=readme-ov-file#lab1")
             {
                 UseShellExecute = true
             };

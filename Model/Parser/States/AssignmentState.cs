@@ -4,12 +4,12 @@ namespace CompilerDemo.Model.Parser.States
 {
     internal class AssignmentState : IState
     {
-        public void Handle(Parser parser, string code, int position)
+        public string Handle(Parser parser, string code, int position)
         {
             if (position >= code.Length)
             {
                 parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                return;
+                return code;
             }
 
             StringBuilder errorBuffer = new StringBuilder();
@@ -22,7 +22,7 @@ namespace CompilerDemo.Model.Parser.States
             position++;
 
             parser.State = new ComplexState();
-            parser.State.Handle(parser, code, position);
+            return parser.State.Handle(parser, code, position);
         }
     }
 }

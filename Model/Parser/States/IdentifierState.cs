@@ -4,7 +4,7 @@ namespace CompilerDemo.Model.Parser.States
 {
     internal class IdentifierState : IState
     {
-        public void Handle(Parser parser, string code, int position)
+        public string Handle(Parser parser, string code, int position)
         {
             char c;
 
@@ -14,17 +14,17 @@ namespace CompilerDemo.Model.Parser.States
                 if (position >= code.Length)
                 {
                     parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                    return;
+                    return code;
                 }
 
                 c = code[position];
                 if(!char.IsLetter(c) && c != '_')
                 {
                     errorBuffer.Append(c);
-                    code.Remove(position);
+                    code = code.Remove(position, 1);
                 }
                 else
-                {
+                {   
                     if(errorBuffer.Length > 0)
                     {
                         parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "identifier start", errorBuffer.ToString()));
@@ -33,7 +33,6 @@ namespace CompilerDemo.Model.Parser.States
 
                     break;
                 }
-                position++;
             }
 
             errorBuffer.Clear();
@@ -46,16 +45,16 @@ namespace CompilerDemo.Model.Parser.States
                     position++;
                     break;
                 }
-
-                if(!char.IsLetter(c) && !char.IsDigit(c) && c == '_')
-                {
-                    errorBuffer.Append(c);
-                    code.Remove(position, 1);
-                }
-                else if(c == ' ')
+                if (c == ' ')
                 {
                     position++;
                     break;
+                }
+
+                if (!char.IsLetter(c) && !char.IsDigit(c) && c != '_')
+                {
+                    errorBuffer.Append(c);
+                    code = code.Remove(position, 1);
                 }
                 else
                 {
@@ -64,12 +63,12 @@ namespace CompilerDemo.Model.Parser.States
                         parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "identifier", errorBuffer.ToString()));
                         errorBuffer.Clear();
                     }
-                }
                     position++;
+                }
             }
 
             parser.State = new AssignmentState();
-            parser.State.Handle(parser, code, position);
+            return parser.State.Handle(parser, code, position);
         }
     }
 }

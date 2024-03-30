@@ -80,5 +80,23 @@ namespace CompilerDemo
             }
         }
 
+        private void CleanButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindowViewModel? dataContext = DataContext as MainWindowViewModel;
+            if (dataContext is null)
+            {
+                return;
+            }
+
+            if (!dataContext.CanClean)
+            {
+                return;
+            }
+
+            string t = dataContext.CleanText;
+            RTB.Document.Blocks.Clear();
+            RTB.Document.Blocks.Add(new Paragraph(new Run(t)));
+            dataContext.CanClean = false;
+        }
     }
 }
