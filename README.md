@@ -150,9 +150,9 @@
 
   <h3>Примеры допустимых строк</h3>
   <pre>
-    z2 = complex(6, -8)       # z2 = 6 - 8j
-    z3 = complex(1, 2.5)      # z3 = 1 + 2.5j
-    z4 = complex(5, 2)        # z4 = 5 + 2j
+    z2 = complex(6,8.3)
+    z3 = complex(-1,2.5)
+    z4 = complex(5,-2.8)
   </pre>
 
   <h3>Диаграмма состояний сканера</h3>
@@ -198,25 +198,25 @@
       VT = { ‘a’…’z’, ‘A’…’Z’, '=', 'complex', '(', ')', '+', 'j', '-', '0'...'9', '.', ‘_’, ‘'‘ }
       VN = { <КЧ>, COMPLEXREM, ASSIGNTMENT, OPEN, REALPART, INTREALPART, INTREALPARTREM, DECIMALREALPART, IMAGINARYPART, DECIMALREALPARTREM, INTIMAGINARYPART, INTIMAGINARYPARTREM, DECIMALIMAGINARYPART, DECIMALIMAGINARYPARTREM, CLOSE}
       P = {
-	    <КЧ> -> letter COMPLEXREM
-      COMPLEXREM -> (letter | _ | digit) COMPLEXREM | = ASSIGNTMENT
-      ASSIGNTMENT -> complex OPEN 
-      OPEN -> ( REALPART 
-      REALPART -> [+ | -] INTREALPART 
-      INTREALPART -> digit0 INTREALPARTREM 
-      INTREALPARTREM -> digit INTREALPARTREM | . DECIMALREALPART | , IMAGINARYPART 
-      DECIMALREALPART -> digit DECIMALREALPARTREM 
-      DECIMALREALPARTREM -> digit DECIMALREALPARTREM | , IMAGINARYPART
-      IMAGINARYPART -> [+ | -] INTIMAGINARYPART
-      INTIMAGINARYPART -> digit0 INTIMAGINARYPARTREM
-      INTIMAGINARYPARTREM -> digit INTIMAGINARYPARTREM | . DECIMALIMAGINARYPART | j CLOSE | CLOSE 
-      DECIMALIMAGINARYPART -> digit DECIMALIMAGINARYPARTREM
-      DECIMALIMAGINARYPARTREM -> digit DECIMALIMAGINARYPARTREM | j CLOSE | CLOSE 
-      CLOSE -> )
-      letter → ‘a’ | ‘b’ | … | ‘z’ | ‘A’ | ‘B’ | … | ‘Z’
-      digit → ‘0’ | ‘1’ | … | ‘9’
-      digit0 →  ‘1’ | … | ‘9’
-       }
+	      <КЧ> -> letter COMPLEXREM
+        COMPLEXREM -> (letter | _ | digit) COMPLEXREM | = ASSIGNTMENT
+        ASSIGNTMENT -> complex OPEN 
+        OPEN -> ( REALPART 
+        REALPART -> [+ | -] INTREALPART 
+        INTREALPART -> digit0 INTREALPARTREM 
+        INTREALPARTREM -> digit INTREALPARTREM | . DECIMALREALPART | , IMAGINARYPART 
+        DECIMALREALPART -> digit DECIMALREALPARTREM 
+        DECIMALREALPARTREM -> digit DECIMALREALPARTREM | , IMAGINARYPART
+        IMAGINARYPART -> [+ | -] INTIMAGINARYPART
+        INTIMAGINARYPART -> digit0 INTIMAGINARYPARTREM
+        INTIMAGINARYPARTREM -> digit INTIMAGINARYPARTREM | . DECIMALIMAGINARYPART
+        DECIMALIMAGINARYPART -> digit DECIMALIMAGINARYPARTREM
+        DECIMALIMAGINARYPARTREM -> digit DECIMALIMAGINARYPARTREM |  CLOSE 
+        CLOSE -> )
+        letter → ‘a’ | ‘b’ | … | ‘z’ | ‘A’ | ‘B’ | … | ‘Z’
+        digit → ‘0’ | ‘1’ | … | ‘9’
+        digit0 →  ‘1’ | … | ‘9’
+      }
     </pre>
 
   <h3>Граф конечного автомата</h3>
