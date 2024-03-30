@@ -151,8 +151,8 @@
   <h3>Примеры допустимых строк</h3>
   <pre>
     z2 = complex(6,8.3)
-    z3 = complex(-1,2.5)
-    z4 = complex(5,-2.8)
+    z3 = complex(-1,+2.5)
+    z4 = complex(+5,-2.8)
   </pre>
 
   <h3>Диаграмма состояний сканера</h3>
@@ -195,7 +195,7 @@
   <h3>Грамматика</h3>
     <pre>
       G[<КЧ> = <Комплексное_число>]: 
-      VT = { ‘a’…’z’, ‘A’…’Z’, '=', 'complex', '(', ')', '+', 'j', '-', '0'...'9', '.', ‘_’, ‘'‘ }
+      VT = { ‘a’…’z’, ‘A’…’Z’, '=', 'complex', '(', ')', '+', '-', '0'...'9', '.', ‘_’, ‘'‘ }
       VN = { <КЧ>, COMPLEXREM, ASSIGNTMENT, OPEN, REALPART, INTREALPART, INTREALPARTREM, DECIMALREALPART, IMAGINARYPART, DECIMALREALPARTREM, INTIMAGINARYPART, INTIMAGINARYPARTREM, DECIMALIMAGINARYPART, DECIMALIMAGINARYPARTREM, CLOSE}
       P = {
 	      <КЧ> -> letter COMPLEXREM

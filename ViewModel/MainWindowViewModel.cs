@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -43,7 +44,6 @@ namespace CompilerDemo.ViewModel
         public ICommand ClassificationCommand { get; }
         public ICommand AnalysisCommand { get; }
         public ICommand DiagnosticsCommand { get; }
-        public ICommand TestCommand { get; }
         public ICommand LiteratureCommand { get; }
         public ICommand InfoCommand { get; }
         public ICommand ReferenceCommand { get; }
@@ -63,7 +63,6 @@ namespace CompilerDemo.ViewModel
             ClassificationCommand = new RelayCommand(Classification);
             AnalysisCommand = new RelayCommand(Analysis);
             DiagnosticsCommand = new RelayCommand(Diagnostics);
-            TestCommand = new RelayCommand(Test);
             LiteratureCommand = new RelayCommand(Literature);
             InfoCommand = new RelayCommand(Info);
             ReferenceCommand = new RelayCommand(Reference);
@@ -195,7 +194,14 @@ namespace CompilerDemo.ViewModel
             if (openFileDialog.ShowDialog() == true)
             {
                 path = openFileDialog.FileName;
-                string buffer = File.ReadAllText(path);
+                string buffer;
+                using (FileStream fs = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                {
+                    using (StreamReader sr = new StreamReader(fs))
+                    {
+                        buffer = sr.ReadToEnd();
+                    }
+                }
                 Text = buffer;
             }
         }
@@ -268,15 +274,6 @@ namespace CompilerDemo.ViewModel
         {
             var p = new Process();
             p.StartInfo = new ProcessStartInfo(@"..\..\..\html\DiagnosticsAndNeutralizationOfErrors.html")
-            {
-                UseShellExecute = true
-            };
-            p.Start();
-        }
-        private void Test()
-        {
-            var p = new Process();
-            p.StartInfo = new ProcessStartInfo(@"..\..\..\html\correct_test_case.txt")
             {
                 UseShellExecute = true
             };

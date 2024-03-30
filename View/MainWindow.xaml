@@ -13,7 +13,7 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
                 <MenuItem Header="Создать" Command="{Binding CreateCommand}"/>
-                <MenuItem Header="Открыть" Command="{Binding OpenCommand}"/>
+                <MenuItem Header="Открыть" Click="Load_Click"/>
                 <MenuItem Header="Сохранить" Command="{Binding SaveCommand}"/>
                 <MenuItem Header="Сохранить как" Command="{Binding SaveAsCommand}"/>
                 <MenuItem Header="Выход" InputGestureText="Alt+F4" Command="{Binding ExitCommand}"  />
@@ -33,7 +33,7 @@
                 <MenuItem Header="Классификация грамматики" Command="{Binding ClassificationCommand}"/>
                 <MenuItem Header="Метод анализа" Command="{Binding AnalysisCommand}"/>
                 <MenuItem Header="Диагностика и нейтрализация ошибок" Command="{Binding DiagnosticsCommand}"/>
-                <MenuItem Header="Тестовый пример" Command="{Binding TestCommand}"/>
+                <MenuItem Header="Тестовый пример" Click="Load_Test"/>
                 <MenuItem Header="Список литературы" Command="{Binding LiteratureCommand}"/>
                 <MenuItem Header="Исходный код программы" Command="{Binding InfoCommand}"/>
             </MenuItem>
@@ -49,7 +49,7 @@
                 <Button Width="48" Height="50" ToolTip="Создать" Padding="0" Command="{Binding CreateCommand}" >
                     <Image Source="../Resources/Create.png" Height="40" Width="38"/>
                 </Button>
-                <Button Width="48" Height="50" ToolTip="Открыть" Padding="0" Command="{Binding OpenCommand}">
+                <Button Width="48" Height="50" ToolTip="Открыть" Padding="0" Click="Load_Click">
                     <Image Source="../Resources/Open.png" Height="40" Width="38"/>
                 </Button>
                 <Button Width="48" Height="50" ToolTip="Сохранить" Padding="0" Command="{Binding SaveCommand}">
@@ -98,7 +98,7 @@
             </Grid.RowDefinitions>
             <RichTextBox x:Name="richTextBox" Margin="10,10,10,10" Padding="5" Grid.Row="0"  AllowDrop="True"
                          local:RichTextBoxHelper.DocumentXaml="{Binding Text}"  Block.LineHeight="1"
-                         VerticalScrollBarVisibility="Visible"/>
+                         VerticalScrollBarVisibility="Visible" />
 
             <GridSplitter Margin="3,3,3,3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="5"/>
 
