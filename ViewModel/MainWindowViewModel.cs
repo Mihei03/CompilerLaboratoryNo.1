@@ -17,9 +17,9 @@ namespace CompilerDemo.ViewModel
     {
         private string path = string.Empty;
         private string _text;
-        private Lexer _lexer = new Lexer(); 
+        private Lexer _lexer = new Lexer();
         private Parser _parser = new Parser();
-        private ObservableCollection<TokenViewModel> _tokenViewModels= new ObservableCollection<TokenViewModel>();
+        private ObservableCollection<TokenViewModel> _tokenViewModels = new ObservableCollection<TokenViewModel>();
         private ObservableCollection<ParseError> _parsingError = new ObservableCollection<ParseError>();
         public string CleanText;
         public bool CanClean { get; set; }
@@ -68,10 +68,10 @@ namespace CompilerDemo.ViewModel
             InfoCommand = new RelayCommand(Info);
             ReferenceCommand = new RelayCommand(Reference);
             AboutProgramCommand = new RelayCommand(AboutProgram);
-        }   
+        }
 
         private void Run()
-        { 
+        {
             Scan();
             Parse();
         }
@@ -89,7 +89,7 @@ namespace CompilerDemo.ViewModel
         {
             if (Text == string.Empty)
             {
-                 return;
+                return;
             }
 
             TokenViewModels.Clear();
@@ -98,7 +98,7 @@ namespace CompilerDemo.ViewModel
             {
                 TokenViewModels.Add(new TokenViewModel(token));
             }
-            
+
         }
         private void Create()
         {
@@ -192,7 +192,7 @@ namespace CompilerDemo.ViewModel
             openFileDialog.InitialDirectory = "c:\\";
             openFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
 
-            if (openFileDialog.ShowDialog() == true)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 path = openFileDialog.FileName;
                 string buffer = File.ReadAllText(path);
@@ -316,7 +316,5 @@ namespace CompilerDemo.ViewModel
             get { return _parsingError; }
             set { _parsingError = value; OnPropertyChanged(); }
         }
-    }  
+    }
 }
-
-

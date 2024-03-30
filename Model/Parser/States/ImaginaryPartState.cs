@@ -5,7 +5,7 @@ namespace CompilerDemo.Model.Parser.States
     internal class ImaginaryPartState : IState
     {
         public string Handle(Parser parser, string code, int position)
-        {   
+        {
             char symbol;
             StringBuilder errorBuffer = new StringBuilder();
 
@@ -94,7 +94,7 @@ namespace CompilerDemo.Model.Parser.States
                 if (!char.IsDigit(symbol) && symbol != ')')
                 {
                     errorBuffer.Append(symbol);
-                    code = code.Remove(position,1);
+                    code = code.Remove(position, 1);
                 }
                 else if (symbol == ')')
                 {

@@ -18,14 +18,14 @@ namespace CompilerDemo.Model.Parser.States
                 }
 
                 c = code[position];
-                if(!char.IsLetter(c) && c != '_')
+                if (!char.IsLetter(c) && c != '_')
                 {
                     errorBuffer.Append(c);
                     code = code.Remove(position, 1);
                 }
                 else
-                {   
-                    if(errorBuffer.Length > 0)
+                {
+                    if (errorBuffer.Length > 0)
                     {
                         parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "identifier start", errorBuffer.ToString()));
                         errorBuffer.Clear();
@@ -40,7 +40,7 @@ namespace CompilerDemo.Model.Parser.States
             {
                 c = code[position];
 
-                if(c == '=')
+                if (c == '=')
                 {
                     position++;
                     break;

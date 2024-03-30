@@ -14,8 +14,8 @@ namespace CompilerDemo
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
-            RTB.AddHandler(RichTextBox.DragOverEvent, new DragEventHandler(RichTextBox_DragOver), true);
-            RTB.AddHandler(RichTextBox.DropEvent, new DragEventHandler(RichTextBox_Drop), true);
+            richTextBox.AddHandler(RichTextBox.DragOverEvent, new DragEventHandler(RichTextBox_DragOver), true);
+            richTextBox.AddHandler(RichTextBox.DropEvent, new DragEventHandler(RichTextBox_Drop), true);
         }
         private void RichTextBox_DragOver(object sender, DragEventArgs e)
         {
@@ -46,7 +46,7 @@ namespace CompilerDemo
                     try
                     {
                         // Open the document in the RichTextBox.
-                        range = new TextRange(RTB.Document.ContentStart, RTB.Document.ContentEnd);
+                        range = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.ContentEnd);
                         fStream = new FileStream(docPath[0], FileMode.OpenOrCreate);
                         range.Load(fStream, dataFormat);
                         fStream.Close();
@@ -67,9 +67,9 @@ namespace CompilerDemo
                 if (cb.SelectedItem != null)
                 {
                     string fontSize = ((ComboBoxItem)cb.SelectedItem).Content.ToString();
-                    if (RTB != null)
+                    if (richTextBox != null)
                     {
-                        RTB.FontSize = double.Parse(fontSize);
+                        richTextBox.FontSize = double.Parse(fontSize);
                     }
                     if (TB != null)
                     {
@@ -94,8 +94,8 @@ namespace CompilerDemo
             }
 
             string t = dataContext.CleanText;
-            RTB.Document.Blocks.Clear();
-            RTB.Document.Blocks.Add(new Paragraph(new Run(t)));
+            richTextBox.Document.Blocks.Clear();
+            richTextBox.Document.Blocks.Add(new Paragraph(new Run(t)));
             dataContext.CanClean = false;
         }
     }

@@ -1,1 +1,3 @@
-1231
+z2 = complex(6,8.3)
+z3 = complex(-1,2.5)
+z4 = complex(5,-2.8)

@@ -85,6 +85,7 @@
                 <Separator/>
 
                 <Button Click="CleanButton_Click">
+                    <Image Source="../Resources/Repair.png" Height="40" Width="38"/>
                 </Button>
             </ToolBar>
         </ToolBarTray>
@@ -95,7 +96,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <RichTextBox x:Name="RTB" Margin="10,10,10,10" Padding="5" Grid.Row="0"  AllowDrop="True"
+            <RichTextBox x:Name="richTextBox" Margin="10,10,10,10" Padding="5" Grid.Row="0"  AllowDrop="True"
                          local:RichTextBoxHelper.DocumentXaml="{Binding Text}"  Block.LineHeight="1"
                          VerticalScrollBarVisibility="Visible"/>
 

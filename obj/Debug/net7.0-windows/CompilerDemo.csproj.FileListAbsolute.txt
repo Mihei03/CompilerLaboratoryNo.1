@@ -310,6 +310,7 @@ C:\Users\mihei\Desktop\CompilerLaboratoryNo.1\obj\Debug\net7.0-windows\CompilerD
 C:\Users\mihei\Desktop\CompilerLaboratoryNo.1\obj\Debug\net7.0-windows\CompilerDemo.AssemblyInfoInputs.cache
 C:\Users\mihei\Desktop\CompilerLaboratoryNo.1\obj\Debug\net7.0-windows\CompilerDemo.AssemblyInfo.cs
 C:\Users\mihei\Desktop\CompilerLaboratoryNo.1\obj\Debug\net7.0-windows\CompilerDemo.csproj.CoreCompileInputs.cache
+C:\Users\mihei\Desktop\CompilerLaboratoryNo.1\obj\Debug\net7.0-windows\CompilerDemo.sourcelink.json
 C:\Users\mihei\Desktop\CompilerLaboratoryNo.1\obj\Debug\net7.0-windows\Compiler.C7415EF0.Up2Date
 C:\Users\mihei\Desktop\CompilerLaboratoryNo.1\obj\Debug\net7.0-windows\CompilerDemo.dll
 C:\Users\mihei\Desktop\CompilerLaboratoryNo.1\obj\Debug\net7.0-windows\refint\CompilerDemo.dll

@@ -35,7 +35,7 @@ namespace CompilerDemo.Model.Parser.States
 
             position++;
 
-            if(position == code.Length)
+            if (position == code.Length)
             {
                 return code;
             }
@@ -45,5 +45,3 @@ namespace CompilerDemo.Model.Parser.States
         }
     }
 }
-
-

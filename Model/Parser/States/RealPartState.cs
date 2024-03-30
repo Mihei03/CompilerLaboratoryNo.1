@@ -49,9 +49,9 @@ namespace CompilerDemo.Model.Parser.States
                 if (!char.IsDigit(symbol) && symbol != '.' && symbol != ',')
                 {
                     errorBuffer.Append(symbol);
-                    code = code.Remove(position,1);
+                    code = code.Remove(position, 1);
                 }
-                else if(symbol == '.')
+                else if (symbol == '.')
                 {
                     if (errorBuffer.Length > 0)
                     {
@@ -62,7 +62,7 @@ namespace CompilerDemo.Model.Parser.States
                     position++;
                     break;
                 }
-                else if(symbol == ',')
+                else if (symbol == ',')
                 {
                     if (errorBuffer.Length > 0)
                     {
@@ -77,7 +77,7 @@ namespace CompilerDemo.Model.Parser.States
                 }
                 else
                 {
-                    if(errorBuffer.Length > 0)
+                    if (errorBuffer.Length > 0)
                     {
                         parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "real number", errorBuffer.ToString()));
                         errorBuffer.Clear();
@@ -87,7 +87,7 @@ namespace CompilerDemo.Model.Parser.States
             }
 
             errorBuffer.Clear();
-            while(position < code.Length)
+            while (position < code.Length)
             {
                 symbol = code[position];
 
@@ -96,7 +96,7 @@ namespace CompilerDemo.Model.Parser.States
                     errorBuffer.Append(symbol);
                     code = code.Remove(position, 1);
                 }
-                else if(symbol == ',')
+                else if (symbol == ',')
                 {
                     if (errorBuffer.Length > 0)
                     {

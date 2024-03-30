@@ -43,7 +43,7 @@ namespace CompilerDemo.Model.Parser.States
                 }
                 else
                 {
-                    if(errorBuffer.Length > 0)
+                    if (errorBuffer.Length > 0)
                     {
                         parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, expected, errorBuffer.ToString()));
                         errorBuffer.Clear();
