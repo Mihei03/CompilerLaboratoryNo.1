@@ -37,7 +37,7 @@
                 <MenuItem Header="Список литературы" Command="{Binding LiteratureCommand}"/>
                 <MenuItem Header="Исходный код программы" Command="{Binding InfoCommand}"/>
             </MenuItem>
-            <MenuItem Header="Пуск"/>
+            <MenuItem Header="Пуск" Command="{Binding RunCommand}"/>
             <MenuItem Header="Справка">
                 <MenuItem Header="Вызов справки" Command="{Binding ReferenceCommand}"/>
                 <MenuItem Header="О программе" Command="{Binding AboutProgramCommand}"/>
