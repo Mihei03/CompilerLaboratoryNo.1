@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         xmlns:materialIcons="clr-namespace:Material.Icons.WPF;assembly=Material.Icons.WPF"
         Style="{DynamicResource MaterialDesignWindow}"
-        Title="Компилятор" Height="450" Width="800"
+        Title="Компилятор" Height="450" Width="983"
         MinHeight="600" MinWidth="800" Icon="/Resources/Compiler.ico">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -85,7 +85,7 @@
                 <Separator/>
 
                 <Button Click="CleanButton_Click">
-                    <Image Source="../Resources/Repair.png" Height="40" Width="38"/>
+                    <Image Source="../Resources/Repair.png" Height="40" Width="38" />
                 </Button>
             </ToolBar>
         </ToolBarTray>

@@ -192,7 +192,7 @@ namespace CompilerDemo.ViewModel
             openFileDialog.InitialDirectory = "c:\\";
             openFileDialog.Filter = "Текстовые файлы (*.txt)|*.txt|Все файлы (*.*)|*.*";
 
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == true)
             {
                 path = openFileDialog.FileName;
                 string buffer = File.ReadAllText(path);
