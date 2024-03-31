@@ -21,8 +21,7 @@ namespace CompilerDemo
         }
         private void MainWindow_Closing(object sender, EventArgs e)
         {
-                if (MessageBox.Show("Сохранить изменения в текущем файле перед выходом?", "Сохранить изменения?", MessageBoxButton.YesNo, MessageBoxImage.Question)
-                        == MessageBoxResult.Yes)
+                if (MessageBox.Show("Сохранить изменения в текущем файле перед выходом?", "Сохранить изменения?", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     SaveFileDialog sfd = new SaveFileDialog();
                     sfd.Filter = "RichText Files (*.txt)|*.txt|All files (*.*)|*.*";
@@ -35,6 +34,7 @@ namespace CompilerDemo
                         }
                     }
                 }
+                Application.Current.Shutdown();
         }
         private void RichTextBox_DragOver(object sender, DragEventArgs e)
         {
@@ -82,6 +82,25 @@ namespace CompilerDemo
             }
         }
 
+
+        private void CleanButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindowViewModel? dataContext = DataContext as MainWindowViewModel;
+            if (dataContext is null)
+            {
+                return;
+            }
+
+            if (!dataContext.CanClean)
+            {
+                return;
+            }
+
+            string t = dataContext.CleanText;
+            richTextBox.Document.Blocks.Clear();
+            richTextBox.Document.Blocks.Add(new Paragraph(new Run(t)));
+            dataContext.CanClean = false;
+        }
         private void fontSizeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox cb = sender as ComboBox;
@@ -102,26 +121,6 @@ namespace CompilerDemo
                 }
             }
         }
-
-        private void CleanButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindowViewModel? dataContext = DataContext as MainWindowViewModel;
-            if (dataContext is null)
-            {
-                return;
-            }
-
-            if (!dataContext.CanClean)
-            {
-                return;
-            }
-
-            string t = dataContext.CleanText;
-            richTextBox.Document.Blocks.Clear();
-            richTextBox.Document.Blocks.Add(new Paragraph(new Run(t)));
-            dataContext.CanClean = false;
-        }
-
         private void Load_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -150,6 +149,9 @@ namespace CompilerDemo
                 doc.Load(fs, DataFormats.Text);
             }
         }
-
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            richTextBox.Document.Blocks.Clear();
+        }
     }
 }

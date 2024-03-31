@@ -38,7 +38,6 @@ namespace CompilerDemo.ViewModel
         public ICommand SaveCommand { get; }
         public ICommand SaveAsCommand { get; }
         public ICommand DeleteCommand { get; }
-        public ICommand ExitCommand { get; }
         public ICommand FormulationCommand { get; }
         public ICommand GrammarCommand { get; }
         public ICommand ClassificationCommand { get; }
@@ -57,7 +56,6 @@ namespace CompilerDemo.ViewModel
             SaveCommand = new RelayCommand(Save);
             SaveAsCommand = new RelayCommand(SaveAs);
             DeleteCommand = new RelayCommand(Delete);
-            ExitCommand = new RelayCommand(Exit);
             FormulationCommand = new RelayCommand(Formulation);
             GrammarCommand = new RelayCommand(Grammar);
             ClassificationCommand = new RelayCommand(Classification);
@@ -214,10 +212,6 @@ namespace CompilerDemo.ViewModel
                 path = saveFileDialog.FileName;
                 File.WriteAllText(path, Text);
             }
-        }
-        private void Exit()
-        {
-            Environment.Exit(0);
         }
 
         private void Delete()
