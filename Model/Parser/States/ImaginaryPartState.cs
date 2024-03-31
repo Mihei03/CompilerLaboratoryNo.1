@@ -30,7 +30,6 @@ namespace CompilerDemo.Model.Parser.States
                         parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "imaginary start", errorBuffer.ToString()));
                         errorBuffer.Clear();
                     }
-
                     position++;
                     break;
                 }
@@ -72,8 +71,7 @@ namespace CompilerDemo.Model.Parser.States
 
                     position++;
                     parser.State = new EndState();
-                    parser.State.Handle(parser, code, position);
-                    return code;
+                    return parser.State.Handle(parser, code, position);
                 }
                 else
                 {

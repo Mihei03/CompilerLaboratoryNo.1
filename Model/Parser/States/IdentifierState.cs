@@ -6,7 +6,7 @@ namespace CompilerDemo.Model.Parser.States
     {
         public string Handle(Parser parser, string code, int position)
         {
-            char c;
+            char symbol;
 
             StringBuilder errorBuffer = new StringBuilder();
             while (position < code.Length)
@@ -17,10 +17,10 @@ namespace CompilerDemo.Model.Parser.States
                     return code;
                 }
 
-                c = code[position];
-                if (!char.IsLetter(c) && c != '_')
+                symbol = code[position];
+                if (!char.IsLetter(symbol) && symbol != '_')
                 {
-                    errorBuffer.Append(c);
+                    errorBuffer.Append(symbol);
                     code = code.Remove(position, 1);
                 }
                 else
@@ -38,22 +38,22 @@ namespace CompilerDemo.Model.Parser.States
             errorBuffer.Clear();
             while (position < code.Length)
             {
-                c = code[position];
+                symbol = code[position];
 
-                if (c == '=')
+                if (symbol == '=')
                 {
                     position++;
                     break;
                 }
-                if (c == ' ')
+                if (symbol == ' ')
                 {
                     position++;
                     break;
                 }
 
-                if (!char.IsLetter(c) && !char.IsDigit(c) && c != '_')
+                if (!char.IsLetter(symbol) && !char.IsDigit(symbol) && symbol != '_')
                 {
-                    errorBuffer.Append(c);
+                    errorBuffer.Append(symbol);
                     code = code.Remove(position, 1);
                 }
                 else

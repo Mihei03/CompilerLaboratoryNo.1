@@ -72,8 +72,19 @@ namespace CompilerDemo.ViewModel
             Scan();
             Parse();
         }
+
         private void Parse()
         {
+            if (Text is null)
+            {
+                return;
+            }
+
+            if(Text.Length == 0)
+            {
+                return;
+            }
+
             ParsingErrors.Clear();
             (List<ParseError> errorList, CleanText) = _parser.Parse(Text);
             CanClean = true;

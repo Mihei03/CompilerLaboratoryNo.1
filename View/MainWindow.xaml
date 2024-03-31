@@ -16,7 +16,7 @@
                 <MenuItem Header="Открыть" Click="Load_Click"/>
                 <MenuItem Header="Сохранить" Command="{Binding SaveCommand}"/>
                 <MenuItem Header="Сохранить как" Command="{Binding SaveAsCommand}"/>
-                <MenuItem Header="Выход" InputGestureText="Alt+F4" Command="{Binding ExitCommand}"  />
+                <MenuItem Header="Выход" InputGestureText="Alt+F4" Click="MainWindow_Closing"/>
             </MenuItem>
             <MenuItem Header="Правка">
                 <MenuItem Header="Отменить" Command="ApplicationCommands.Undo"/>

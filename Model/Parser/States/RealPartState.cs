@@ -72,8 +72,7 @@ namespace CompilerDemo.Model.Parser.States
 
                     position++;
                     parser.State = new ImaginaryPartState();
-                    parser.State.Handle(parser, code, position);
-                    return code;
+                    return parser.State.Handle(parser, code, position);
                 }
                 else
                 {
