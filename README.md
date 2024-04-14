@@ -198,7 +198,7 @@
       VT = { ‘a’…’z’, ‘A’…’Z’, '=', 'complex', '(', ')', '+', '-', '0'...'9', '.', ‘_’, ‘'‘ }
       VN = { <КЧ>, COMPLEXREM, ASSIGNTMENT, OPEN, REALPART, INTREALPART, INTREALPARTREM, DECIMALREALPART, IMAGINARYPART, DECIMALREALPARTREM, INTIMAGINARYPART, INTIMAGINARYPARTREM, DECIMALIMAGINARYPART, DECIMALIMAGINARYPARTREM, CLOSE}
       P = {
-	      <КЧ> -> letter COMPLEXREM
+	<КЧ> -> letter COMPLEXREM
         COMPLEXREM -> (letter | _ | digit) COMPLEXREM | = ASSIGNTMENT
         ASSIGNTMENT -> complex OPEN 
         OPEN -> ( REALPART 
@@ -251,19 +251,20 @@
   
   <p>
     1. Дополнить парсер грамматикой G[<АВ>]. Реализовать данную КС-граммматику методом рекурсивного спуска:
+<pre>
       1. АВ →  id = T
       2. E → TA 
       3. A → ε | + TA | - TA 
       4. T → ОВ 
       5. В → ε | *ОВ | /ОВ 
       6. О → id | (E) 
+</pre>
     2. Реализовать алгоритм записи выражений в форме тетрад.
   </p>
-  
   <h3>Тестовые примеры</h3>
-  <h4>Тест №1.1 Пример без ошибок.</h4>
+  <h4>Тест №1 Пример без ошибок.</h4>
   <img src="bin/Debug/net7.0-windows/Readme/Tetrad.png" alt="Тест">
-  <h4>Тест №1.2 Пример с ошибокой.</h4>
+  <h4>Тест №2 Пример с ошибокой.</h4>
   <img src="bin/Debug/net7.0-windows/Readme/Tetrad1.png" alt="Тест-Ошибка">
 </body>
 </html>
