@@ -19,6 +19,13 @@ namespace CompilerDemo.ViewModel
                     Tokens.Remove(token);
             }
 
+            int openParenthesisCount = Tokens.Count(t => t.RawToken == "(");
+            int closeParenthesisCount = Tokens.Count(t => t.RawToken == ")");
+            if (openParenthesisCount != closeParenthesisCount)
+            {
+                throw new Exception("Ошибка: зачем брать 1 переменную в скобки?..");
+            }
+
             SearchParenthesis(ref Tokens);
 
             for (int i = 0; i < Tokens.Count(); i++)
@@ -40,31 +47,37 @@ namespace CompilerDemo.ViewModel
                 }
             }
 
-            for (int i = 0; i < Tokens.Count(); i++)
+            for (int i = 0; i < Tokens.Count() - 1; i++)
             {
                 // Умножение двух чисел
                 if (Tokens[i].RawToken == "*")
                 {
                     string operand1 = Tokens[i - 1].RawToken;
-                    string operand2 = Tokens[i + 1].RawToken;
-                    tetrads.Add(new Tetrads("multiply", operand1, operand2, "t" + tetrads.Count()));
-                    Tokens[i - 1] = new Token(tetrads.Last().Result, Tokens[i - 1].StartPos);
-                    Tokens.RemoveAt(i);
-                    Tokens.RemoveAt(i);
-                    CreateTetrads(Tokens);
-                    return tetrads;
+                    string operand2 = (i + 1 < Tokens.Count()) ? Tokens[i + 1].RawToken : null;
+                    if (operand2 != null)
+                    {
+                        tetrads.Add(new Tetrads("multiply", operand1, operand2, "t" + tetrads.Count()));
+                        Tokens[i - 1] = new Token(tetrads.Last().Result, Tokens[i - 1].StartPos);
+                        Tokens.RemoveAt(i);
+                        Tokens.RemoveAt(i);
+                        CreateTetrads(Tokens);
+                        return tetrads;
+                    }
                 }
                 // Деление двух чисел
                 if (Tokens[i].RawToken == "/")
                 {
                     string operand1 = Tokens[i - 1].RawToken;
-                    string operand2 = Tokens[i + 1].RawToken;
-                    tetrads.Add(new Tetrads("divide", operand1, operand2, "t" + tetrads.Count()));
-                    Tokens[i - 1] = new Token(tetrads.Last().Result, Tokens[i - 1].StartPos);
-                    Tokens.RemoveAt(i);
-                    Tokens.RemoveAt(i);
-                    CreateTetrads(Tokens);
-                    return tetrads;
+                    string operand2 = (i + 1 < Tokens.Count()) ? Tokens[i + 1].RawToken : null;
+                    if (operand2 != null)
+                    {
+                        tetrads.Add(new Tetrads("divide", operand1, operand2, "t" + tetrads.Count()));
+                        Tokens[i - 1] = new Token(tetrads.Last().Result, Tokens[i - 1].StartPos);
+                        Tokens.RemoveAt(i);
+                        Tokens.RemoveAt(i);
+                        CreateTetrads(Tokens);
+                        return tetrads;
+                    }
                 }
             }
 
@@ -74,26 +87,40 @@ namespace CompilerDemo.ViewModel
                 if (Tokens[i].RawToken == "+")
                 {
                     string operand1 = Tokens[i - 1].RawToken;
-                    string operand2 = Tokens[i + 1].RawToken;
-                    tetrads.Add(new Tetrads("plus", operand1, operand2, "t" + tetrads.Count()));
-                    Tokens[i - 1] = new Token(tetrads.Last().Result, Tokens[i - 1].StartPos);
-                    Tokens.RemoveAt(i);
-                    Tokens.RemoveAt(i);
-                    CreateTetrads(Tokens);
-                    return tetrads;
+                    string operand2 = null;
+                    if (i + 1 < Tokens.Count())
+                    {
+                        operand2 = Tokens[i + 1].RawToken;
+                    }
+                    if (operand2 != null)
+                    {
+                        tetrads.Add(new Tetrads("plus", operand1, operand2, "t" + tetrads.Count()));
+                        Tokens[i - 1] = new Token(tetrads.Last().Result, Tokens[i - 1].StartPos);
+                        Tokens.RemoveAt(i);
+                        Tokens.RemoveAt(i);
+                        CreateTetrads(Tokens);
+                        return tetrads;
+                    }
                 }
 
                 // Вычитание двух чисел
                 if (Tokens[i].RawToken == "-")
                 {
                     string operand1 = Tokens[i - 1].RawToken;
-                    string operand2 = Tokens[i + 1].RawToken;
-                    tetrads.Add(new Tetrads("minus", operand1, operand2, "t" + tetrads.Count()));
-                    Tokens[i - 1] = new Token(tetrads.Last().Result, Tokens[i - 1].StartPos);
-                    Tokens.RemoveAt(i);
-                    Tokens.RemoveAt(i);
-                    CreateTetrads(Tokens);
-                    return tetrads;
+                    string operand2 = null;
+                    if (i + 1 < Tokens.Count())
+                    {
+                        operand2 = Tokens[i + 1].RawToken;
+                    }
+                    if (operand2 != null)
+                    {
+                        tetrads.Add(new Tetrads("minus", operand1, operand2, "t" + tetrads.Count()));
+                        Tokens[i - 1] = new Token(tetrads.Last().Result, Tokens[i - 1].StartPos);
+                        Tokens.RemoveAt(i);
+                        Tokens.RemoveAt(i);
+                        CreateTetrads(Tokens);
+                        return tetrads;
+                    }
                 }
             }
 
@@ -148,7 +175,15 @@ namespace CompilerDemo.ViewModel
                 int startIndex = Tokens.IndexOf(OpenParenthesis);
                 int endIndex = Tokens.IndexOf(CloseParenthesis) + 1;
                 Tokens.RemoveRange(startIndex, endIndex - startIndex);
-                Tokens.Insert(startIndex, new Token(tetrads.Last().Result, OpenParenthesis.StartPos));
+
+                if (tetrads.Count != 0)
+                {
+                    Tokens.Insert(startIndex, new Token(tetrads.Last().Result, OpenParenthesis.StartPos));
+                }
+                else
+                {
+                    Tokens.Insert(startIndex, new Token(tokensBuff.Last().RawToken, OpenParenthesis.StartPos));
+                }
             }
 
             foreach (var token in Tokens.ToList())
