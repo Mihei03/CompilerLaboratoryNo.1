@@ -1,17 +1,14 @@
-﻿using CompilerDemo.Model;
+﻿using CompilerDemo.View;
+using CompilerDemo.Model;
 using CompilerDemo.Model.Parser;
-using CompilerDemo.View;
 using Microsoft.Win32;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CompilerDemo.ViewModel
 {
@@ -20,8 +17,6 @@ namespace CompilerDemo.ViewModel
         private string path = string.Empty;
         private string _text;
         private List<Token> _tokens = new List<Token>();
-        private TetradsViewModel _tetradsViewModel = new TetradsViewModel();
-        private ObservableCollection<Tetrads> _tetrads = new ObservableCollection<Tetrads>();
         private Lexer _lexer = new Lexer();
         private Parser _parser = new Parser();
         private ObservableCollection<TokenViewModel> _tokenViewModels = new ObservableCollection<TokenViewModel>();
@@ -75,18 +70,6 @@ namespace CompilerDemo.ViewModel
         {
             Scan();
             Parse();
-            CreateTetrads();
-        }
-
-        private void CreateTetrads()
-        {
-            Tetrads.Clear();
-            _tetradsViewModel = new TetradsViewModel();
-            List<Tetrads> tetradsList = _tetradsViewModel.CreateTetrads(_tokens.ToList());
-            foreach (Tetrads tetrads in tetradsList)
-            {
-                Tetrads.Add(tetrads);
-            }
         }
 
         private void Parse()
@@ -102,7 +85,7 @@ namespace CompilerDemo.ViewModel
             }
 
             ParsingErrors.Clear();
-            (List<ParseError> errorList, CleanText) = _parser.Parse(Text);
+            List<ParseError> errorList = _parser.Parse(_tokens);
             CanClean = true;
             foreach (ParseError error in errorList)
             {
@@ -117,12 +100,11 @@ namespace CompilerDemo.ViewModel
             }
 
             TokenViewModels.Clear();
-            _tokens = _lexer.Scan(Text);
+            _tokens = _lexer.Scan(Text).ToList();
             foreach (Token token in _tokens)
             {
                 TokenViewModels.Add(new TokenViewModel(token));
             }
-
         }
         private void Create()
         {
@@ -333,11 +315,6 @@ namespace CompilerDemo.ViewModel
         {
             get { return _parsingError; }
             set { _parsingError = value; OnPropertyChanged(); }
-        }
-        public ObservableCollection<Tetrads> Tetrads
-        {
-            get { return _tetrads; }
-            set { _tetrads = value; OnPropertyChanged(); }
         }
     }
 }

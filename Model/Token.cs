@@ -2,128 +2,106 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace CompilerDemo.Model
 {
     internal enum TokenType
     {
-        Identifier = 1,
+        Identifier = 0,
         Complex,
+        Integer,
+        Double,
         Whitespace,
-        Newline,
-        Assignment,
-        OpenRoundBracket,
-        CloseRoundBracket,
-        Comma,
-        IntegerLiteral,
-        ImaginaryWhole,
-        DoubleLiteral,
-        FractionalImaginary,
-        Minus,
-        Plus,
-        Apostrophe,
-        StringLiteral,
         Less,
         Greater,
+        OpenParenthesis,
+        CloseParenthesis,
+        IntegerLiteral,
+        DoubleLiteral,
+        Comma,
+        Semicolon,
+
+        Newline,
+        Assignment,
+
+        Plus,
+        Minus,
         Multiply,
         Divide,
         Module,
-        GreaterOrEqual,
-        LessOrEqual,
-        Equal,
-        And,
-        Or,
-        Not,
-        True,
-        False,
-        If,
-        Else,
-        For,
-        While,
+
         Invalid
     }
 
-
     internal class Token
     {
-        private static Dictionary<string, TokenType> DefaultTypes = new Dictionary<string, TokenType>()
+        public static Dictionary<string, TokenType> DefaultTypes { get; }
+            = new Dictionary<string, TokenType>()
         {
             { "complex", TokenType.Complex },
+
             { "\n", TokenType.Newline },
             { " ", TokenType.Whitespace },
             { ",", TokenType.Comma },
-            { "'", TokenType.Apostrophe },
+            { ";", TokenType.Semicolon },
             { "=", TokenType.Assignment },
-            { "(", TokenType.OpenRoundBracket },
-            { ")", TokenType.CloseRoundBracket },
+
+            { "(", TokenType.OpenParenthesis },
+            { ")", TokenType.CloseParenthesis },
+
             { "+", TokenType.Plus },
             { "-", TokenType.Minus },
             { "*", TokenType.Multiply },
             { "/", TokenType.Divide },
             { "%", TokenType.Module },
-            { ">", TokenType.Greater},
-            { "<", TokenType.Less },
-            { "==", TokenType.Equal },
-            { ">=", TokenType.GreaterOrEqual },
-            { "<=", TokenType.LessOrEqual },
-            { "and", TokenType.And },
-            { "not", TokenType.Not },
-            { "or", TokenType.Or },
-            { "true", TokenType.True },
-            { "false", TokenType.False },
-            { "if", TokenType.If },
-            { "else", TokenType.Else },
-            { "for", TokenType.For },
-            { "while", TokenType.While },
         };
+
         public TokenType Type { get; }
         public string RawToken { get; }
         public int StartPos { get; }
         public int EndPos { get => StartPos + RawToken.Length; }
+
         public Token(string rawToken, int startPos)
         {
             if (rawToken.Length == 0)
                 throw new ArgumentException("raw token is empty");
+
             RawToken = rawToken;
             StartPos = startPos;
             Type = GetTokenType(rawToken);
         }
+
         public static bool DefaultTokenExists(string rawToken)
             => DefaultTypes.ContainsKey(rawToken);
+
         private static bool IsIdentifier(string rawToken)
-            => rawToken.Length != 0 && (char.IsLetter(rawToken.First()) || rawToken.First() == '_');
+        {
+            if (rawToken == "std::complex<double>")
+                return false;
+
+            return rawToken.Length != 0 && (char.IsLetter(rawToken.First()) || rawToken.First() == '_') && Regex.IsMatch(rawToken, "^[a-zA-Z0-9_]+$");
+        }
         private static bool IsIntegerLiteral(string rawToken)
             => int.TryParse(rawToken, out int _) && !rawToken.StartsWith("0.");
         private static bool IsDoubleLiteral(string rawToken)
-            => double.TryParse(rawToken, NumberFormatInfo.InvariantInfo, out double _) && (rawToken.StartsWith("0.") || rawToken.Contains('.'));
-        private static bool IsStringLiteral(string rawToken)
         {
-            return rawToken.StartsWith("'") && rawToken.EndsWith("'") && rawToken.Length > 2;
+            return double.TryParse(rawToken, NumberFormatInfo.InvariantInfo, out double _)
+                && (rawToken.StartsWith("0.") != !rawToken.StartsWith('0'))
+                && !rawToken.EndsWith('.');
         }
+        private static bool IsStringLiteral(string rawToken)
+            => rawToken.StartsWith("\"") && rawToken.EndsWith("\"") && !rawToken.Contains('\n') && rawToken.Length > 1;
+
         public static TokenType GetTokenType(string rawToken)
         {
             if (DefaultTokenExists(rawToken))
             {
                 return DefaultTypes[rawToken];
             }
-            if (IsStringLiteral(rawToken))
-            {
-                return TokenType.StringLiteral;
-            }
             if (IsIdentifier(rawToken))
             {
                 return TokenType.Identifier;
-            }
-            if (rawToken.EndsWith("j"))
-            {
-                if (int.TryParse(rawToken.Trim('j'), out _))
-                {
-                    return TokenType.ImaginaryWhole;
-                }
-                else if (double.TryParse(rawToken.Trim('j'), NumberFormatInfo.InvariantInfo, out _))
-                {
-                    return TokenType.FractionalImaginary;
-                }
             }
             if (IsIntegerLiteral(rawToken))
             {
@@ -133,6 +111,7 @@ namespace CompilerDemo.Model
             {
                 return TokenType.DoubleLiteral;
             }
+
             return TokenType.Invalid;
         }
     }

@@ -1,26 +1,46 @@
 ﻿using CompilerDemo.Model.Parser.States;
-using Microsoft.Xaml.Behaviors.Core;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CompilerDemo.Model.Parser
 {
     internal class Parser
     {
-        public IState State { get; set; }
-        private List<ParseError> Errors { get; set; }
-        public Parser()
-        {
-            Errors = new List<ParseError>();
-            State = new ComplexState();
-        }
+        private List<ParseError> Errors { get; set; } = new List<ParseError>();
+            
 
-        public (List<ParseError>,string) Parse(string code)
+        public List<ParseError> Parse(List<Token> tokens)
         {
-            code = code.Replace("\r", string.Empty);
+            List<IParserState> States = new List<IParserState>()
+            {
+                new IdentifierState(),
+                new AssignmentState(),
+                new ComplexState(),
+                new OpenParenthesisState(),
+                new RealPartState(),
+                new CommaState(),
+                new ImaginaryPartState(),
+                new CloseParenthesisState(),
+                new SemicolonState(),
+            };
             Errors.Clear();
-            State = new IdentifierState();
-            string cleanCode = State.Handle(this, code, 0);
-            return (Errors, cleanCode);
+
+            List<Token> line = tokens.TakeWhile(t => t.Type != TokenType.Newline).ToList();
+            tokens = tokens.SkipWhile(t => t.Type != TokenType.Newline).ToList();
+            tokens = tokens.SkipWhile(t => t.Type == TokenType.Newline).ToList();
+            while (line.Count > 0)
+            {
+                States.First().Parse(this, line, States.ToList());
+                if (line.Last().Type != TokenType.CloseParenthesis || line.Count < 8)
+                {
+                    ParserUtils.CreateError(this, line.Last().EndPos, "Незаконченное выражение");
+                }
+                line = tokens.TakeWhile(t => t.Type != TokenType.Newline).ToList();
+                tokens = tokens.SkipWhile(t => t.Type != TokenType.Newline).ToList();
+                tokens = tokens.SkipWhile(t => t.Type == TokenType.Newline).ToList();
+            }
+
+            return Errors;
         }
 
         public void AddError(ParseError error)

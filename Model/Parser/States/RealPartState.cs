@@ -1,124 +1,50 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace CompilerDemo.Model.Parser.States
 {
-    internal class RealPartState : IState
+    internal class RealPartState : IParserState
     {
-        public string Handle(Parser parser, string code, int position)
+        public void Parse(Parser parser, List<Token> tokens, List<IParserState> states)
         {
-            char symbol;
-            StringBuilder errorBuffer = new StringBuilder();
-
-            while (position < code.Length)
+            if (ParserUtils.TrimWhitespaceTokens(ref tokens) == false || states.Count == 0)
             {
-                if (position >= code.Length)
-                {
-                    parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                    return code;
-                }
+                return;
+            }
 
-                char c = code[position];
-                if (!char.IsDigit(c) && c != '+' && c != '-')
+            List<Token> tail = new List<Token>(tokens);
+            List<Token> errorBuffer = new List<Token>();
+            foreach (Token token in tail.ToList())
+            {
+                if (token.Type == TokenType.Comma)
                 {
-                    errorBuffer.Append(c);
-                    code = code.Remove(position, 1);
+                    if (token == tokens.First() && errorBuffer.Count == 0)
+                    {
+                        ParserUtils.CreateError(parser, token.StartPos, "Пропущено число с плавающей точкой");
+                    }
+                    break;
+                }
+                if (token.Type != TokenType.DoubleLiteral && token.Type != TokenType.IntegerLiteral)
+                {
+                    errorBuffer.Add(token);
+                    tail.Remove(token);
                 }
                 else
                 {
-                    if (errorBuffer.Length > 0)
-                    {
-                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "real start", errorBuffer.ToString()));
-                        errorBuffer.Clear();
-                    }
-
-                    position++;
+                    tail.Remove(tail.First());
                     break;
                 }
             }
 
-            errorBuffer.Clear();
-            while (position < code.Length)
+            states = states.Skip(1).ToList();
+            if (tail.Count > 0)
             {
-                if (position >= code.Length)
-                {
-                    parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                    return code;
-                }
-
-                symbol = code[position];
-                if (!char.IsDigit(symbol) && symbol != '.' && symbol != ',')
-                {
-                    errorBuffer.Append(symbol);
-                    code = code.Remove(position, 1);
-                }
-                else if (symbol == '.')
-                {
-                    if (errorBuffer.Length > 0)
-                    {
-                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "real number", errorBuffer.ToString()));
-                        errorBuffer.Clear();
-                    }
-
-                    position++;
-                    break;
-                }
-                else if (symbol == ',')
-                {
-                    if (errorBuffer.Length > 0)
-                    {
-                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "real number", errorBuffer.ToString()));
-                        errorBuffer.Clear();
-                    }
-
-                    position++;
-                    parser.State = new ImaginaryPartState();
-                    return parser.State.Handle(parser, code, position);
-                }
-                else
-                {
-                    if (errorBuffer.Length > 0)
-                    {
-                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "real number", errorBuffer.ToString()));
-                        errorBuffer.Clear();
-                    }
-                    position++;
-                }
+                ParserUtils.CreateErrorFromBuffer(parser, errorBuffer, "Ожидалось число с плавающей точкой");
+                states.FirstOrDefault()?.Parse(parser, tail, states);
+                return;
             }
 
-            errorBuffer.Clear();
-            while (position < code.Length)
-            {
-                symbol = code[position];
-
-                if (!char.IsDigit(symbol) && symbol != ',')
-                {
-                    errorBuffer.Append(symbol);
-                    code = code.Remove(position, 1);
-                }
-                else if (symbol == ',')
-                {
-                    if (errorBuffer.Length > 0)
-                    {
-                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "real number", errorBuffer.ToString()));
-                        errorBuffer.Clear();
-                    }
-
-                    position++;
-                    break;
-                }
-                else
-                {
-                    if (errorBuffer.Length > 0)
-                    {
-                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "real number", errorBuffer.ToString()));
-                        errorBuffer.Clear();
-                    }
-                    position++;
-                }
-            }
-
-            parser.State = new ImaginaryPartState();
-            return parser.State.Handle(parser, code, position);
+            states.FirstOrDefault()?.Parse(parser, tokens, states);
         }
     }
 }
