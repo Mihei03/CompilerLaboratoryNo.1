@@ -107,10 +107,9 @@
                 <TabItem Header="Вывод парсера">
                     <DataGrid IsReadOnly="True" ItemsSource="{Binding ParsingErrors}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Начало" Width="auto" Binding="{Binding StartPos}"/>
-                            <DataGridTextColumn Header="Конец" Width="auto" Binding="{Binding EndPos}"/>
-                            <DataGridTextColumn Header="Ожидалось" Width="auto" Binding="{Binding ExpectedTokenType}"/>
-                            <DataGridTextColumn Header="Пропущено" Width="auto" Binding="{Binding DiscardedFragment}"/>
+                            <DataGridTextColumn Header="Начало" Width="auto" Binding="{Binding Pos}"/>
+                            <DataGridTextColumn Header="Ожидалось" Width="auto" Binding="{Binding Expected}"/>
+                            <DataGridTextColumn Header="Встречено" Width="auto" Binding="{Binding Actual}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
@@ -122,16 +121,6 @@
                             <DataGridTextColumn Header="Лексема" Width="*" Binding="{Binding RawToken}"/>
                             <DataGridTextColumn Header="Начало лексемы" Width="*" Binding="{Binding StartPos}"/>
                             <DataGridTextColumn Header="Конец лексемы" Width="*" Binding="{Binding EndPos}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </TabItem>
-                <TabItem Header="Вывод тетрад">
-                    <DataGrid IsReadOnly="True" ItemsSource="{Binding Tetrads}" AutoGenerateColumns="False">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Операция" Binding="{Binding Op}"/>
-                            <DataGridTextColumn Header="Первый операнд" Width="*" Binding="{Binding Arg1}"/>
-                            <DataGridTextColumn Header="Второй операнд" Width="*" Binding="{Binding Arg2}"/>
-                            <DataGridTextColumn Header="Результат" Width="*" Binding="{Binding Result}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

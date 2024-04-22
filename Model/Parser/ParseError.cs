@@ -1,18 +1,26 @@
-﻿namespace CompilerDemo.Model.Parser
+﻿using System.Collections.Generic;
+
+namespace CompilerDemo.Model.Parser
 {
     internal class ParseError
     {
-        public string ExpectedTokenType { get; private set; }
-        public string DiscardedFragment { get; private set; }
-        public int StartPos { get; private set; }
-        public int EndPos { get; private set; }
+        private List<Token> errors;
 
-        public ParseError(int startPosition, int endPosition, string expected, string discardedFragment)
+        public string Actual { get; private set; }
+        public string Expected { get; private set; }
+        public int Pos { get; private set; }
+
+        public ParseError(int pos, string actual, string expected)
         {
-            ExpectedTokenType = expected;
-            DiscardedFragment = discardedFragment;
-            StartPos = startPosition;
-            EndPos = endPosition;
+            Pos = pos;
+            Actual = actual;
+            Expected = expected;
+        }
+
+        public ParseError(List<Token> errors, string expected)
+        {
+            this.errors = errors;
+            Expected = expected;
         }
     }
 }

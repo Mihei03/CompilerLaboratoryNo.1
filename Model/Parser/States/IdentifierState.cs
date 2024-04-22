@@ -1,74 +1,51 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace CompilerDemo.Model.Parser.States
 {
-    internal class IdentifierState : IState
+    internal class IdentifierState : IParserState
     {
-        public string Handle(Parser parser, string code, int position)
+        public void Parse(Parser parser, List<Token> tokens, List<IParserState> states)
         {
-            char symbol;
-
-            StringBuilder errorBuffer = new StringBuilder();
-            while (position < code.Length)
+            if (ParserUtils.TrimWhitespaceTokens(ref tokens) == false || states.Count == 0)
             {
-                if (position >= code.Length)
-                {
-                    parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                    return code;
-                }
+                return;
+            }
 
-                symbol = code[position];
-                if (!char.IsLetter(symbol) && symbol != '_')
+            List<Token> tail = new List<Token>(tokens);
+            List<Token> errorBuffer = new List<Token>();
+            foreach (Token token in tail.ToList())
+            {
+                if (token.Type == TokenType.Assignment)
                 {
-                    errorBuffer.Append(symbol);
-                    code = code.Remove(position, 1);
+                    if (token == tokens.First() && errorBuffer.Count == 0)
+                    {
+                        ParserUtils.CreateError(parser, token.StartPos, "Пропущен идентификатор");
+                    }
+                    break;
+                }
+                if (token.Type != TokenType.Identifier)
+                {
+                    errorBuffer.Add(token);
+                    tail.Remove(token);
                 }
                 else
                 {
-                    if (errorBuffer.Length > 0)
-                    {
-                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "identifier start", errorBuffer.ToString()));
-                        errorBuffer.Clear();
-                    }
-
+                    tail.Remove(tail.First());
                     break;
                 }
             }
 
-            errorBuffer.Clear();
-            while (position < code.Length)
+            states = states.Skip(1).ToList();
+            if (tail.Count > 0)
             {
-                symbol = code[position];
-
-                if (symbol == '=')
-                {
-                    position++;
-                    break;
-                }
-                if (symbol == ' ')
-                {
-                    position++;
-                    break;
-                }
-
-                if (!char.IsLetter(symbol) && !char.IsDigit(symbol) && symbol != '_')
-                {
-                    errorBuffer.Append(symbol);
-                    code = code.Remove(position, 1);
-                }
-                else
-                {
-                    if (errorBuffer.Length > 0)
-                    {
-                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, "identifier", errorBuffer.ToString()));
-                        errorBuffer.Clear();
-                    }
-                    position++;
-                }
+                ParserUtils.CreateErrorFromBuffer(parser, errorBuffer, "Ожидался идентификатор");
+                states.FirstOrDefault()?.Parse(parser, tail, states);
+                return;
             }
 
-            parser.State = new AssignmentState();
-            return parser.State.Handle(parser, code, position);
+            states.FirstOrDefault()?.Parse(parser, tokens, states);
         }
+
     }
 }

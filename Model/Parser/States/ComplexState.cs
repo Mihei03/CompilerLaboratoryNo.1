@@ -1,60 +1,50 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace CompilerDemo.Model.Parser.States
 {
-    internal class ComplexState : IState
+    internal class ComplexState : IParserState
     {
-        public string Handle(Parser parser, string code, int position)
+        public void Parse(Parser parser, List<Token> tokens, List<IParserState> states)
         {
-            if (position >= code.Length)
+            if (ParserUtils.TrimWhitespaceTokens(ref tokens) == false || states.Count == 0 && states.Count == 0)
             {
-                parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                return code;
+                return;
             }
 
-            string whitespaceCharacters = " \n\r\t";
-            while (whitespaceCharacters.Contains(code[position]))
+            List<Token> tail = new List<Token>(tokens);
+            List<Token> errorBuffer = new List<Token>();
+            foreach (Token token in tail.ToList())
             {
-                code = code.Remove(position, 1);
-                if (position >= code.Length)
+                if (token.Type == TokenType.OpenParenthesis)
                 {
-                    parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                    return code;
+                    if (token == tokens.First() && errorBuffer.Count == 0)
+                    {
+                        ParserUtils.CreateError(parser, token.StartPos, "Пропущено complex");
+                    }
+                    break;
                 }
-            }
-            code = code.Insert(position, " ");
-
-            string expected = " complex(";
-
-            StringBuilder errorBuffer = new StringBuilder();
-            for (int expectedPos = 0; expectedPos < expected.Length; expectedPos++)
-            {
-                if (position >= code.Length)
+                if (token.Type != TokenType.Complex)
                 {
-                    parser.AddError(new ParseError(position, position, "incomplete line", ""));
-                    return code;
-                }
-
-                if (expected[expectedPos] != code[position])
-                {
-                    errorBuffer.Append(code[position]);
-                    code = code.Remove(position, 1);
-                    expectedPos--;
+                    errorBuffer.Add(token);
+                    tail.Remove(token);
                 }
                 else
                 {
-                    if (errorBuffer.Length > 0)
-                    {
-                        parser.AddError(new ParseError(position + 1, position + errorBuffer.Length, expected, errorBuffer.ToString()));
-                        errorBuffer.Clear();
-                    }
-
-                    position++;
+                    tail.Remove(tail.First());
+                    break;
                 }
             }
 
-            parser.State = new RealPartState();
-            return parser.State.Handle(parser, code, position);
+            states = states.Skip(1).ToList();
+            if (tail.Count > 0)
+            {
+                ParserUtils.CreateErrorFromBuffer(parser, errorBuffer, "Ожидалось complex");
+                states.FirstOrDefault()?.Parse(parser, tail, states);
+                return;
+            }
+
+            states.FirstOrDefault()?.Parse(parser, tokens, states);
         }
     }
 }

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CompilerDemo.Model
 {
     internal class Lexer
     {
-        public List<Token> Scan(string code)
+        public IEnumerable<Token> Scan(string code)
         {
-            if (code == null)
+            if (code.Length == 0)
             {
-                return new List<Token>();
+                return Enumerable.Empty<Token>();
             }
 
             List<Token> tokens = new List<Token>();
@@ -26,92 +27,45 @@ namespace CompilerDemo.Model
 
             } while (position < code.Length);
 
-            return tokens;
+            List<Token> resultTokens = new List<Token>();
+            for (int i = 0; i < tokens.Count-1; i++)
+            {
+                if ((tokens[i].Type == TokenType.Plus || tokens[i].Type == TokenType.Minus)
+                    && (tokens[i+1].Type == TokenType.DoubleLiteral || tokens[i + 1].Type == TokenType.IntegerLiteral))
+                {
+                    string rawNumber = tokens[i].RawToken + tokens[i+1].RawToken;
+                    Token numberToken = new Token(rawNumber, tokens[i].StartPos);
+                    resultTokens.Add(numberToken);
+                    i++;
+                }
+                else
+                {
+                    resultTokens.Add(tokens[i]);
+                }
+            }
+            resultTokens.Add(tokens.Last());
+
+            return resultTokens;
         }
 
         private string ParseToken(string code, int position)
         {
             char symbol = code[position];
+            string allowedIdentifierSymbols = "_:<>";
             if (char.IsWhiteSpace(symbol))
             {
                 return symbol.ToString();
             }
-
-            if (symbol == '\'')
-            {
-                return ParseStringLiteral(code, position);
-            }
-
             if (char.IsLetter(symbol) || symbol == '_')
             {
-                return Parse(code, position, (c) => !char.IsLetterOrDigit(c) && c != '_');
+                return Parse(code, position, (c) => !char.IsLetterOrDigit(c) && !allowedIdentifierSymbols.Contains(c));
             }
-
             if (char.IsDigit(symbol))
             {
-                return ParseNumeric(code, position);
+                return Parse(code, position, (c) => !char.IsLetterOrDigit(c) && c != '.');
             }
 
             return ParseOperator(code, position);
-        }
-
-        private string ParseNumeric(string code, int position)
-        {
-            char symbol;
-            StringBuilder buffer = new StringBuilder();
-            bool hasDot = false;
-
-            while (position < code.Length)
-            {
-                symbol = code[position];
-                if (char.IsDigit(symbol) || symbol == '.')
-                {
-                    if (symbol == '.')
-                    {
-                        if (hasDot) break; // Несколько точек в числе
-                        hasDot = true;
-                    }
-                    buffer.Append(symbol);
-                    position++;
-                }
-                else if (symbol == 'j')
-                {
-                    buffer.Append(symbol);
-                    position++;
-                    break;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return buffer.ToString();
-        }
-
-        private string ParseStringLiteral(string code, int position)
-        {
-            char symbol;
-            StringBuilder buffer = new StringBuilder();
-            int pairCount = 0;
-
-            while (position < code.Length)
-            {
-                symbol = code[position];
-                if (symbol == '\'')
-                {
-                    pairCount++;
-                }
-                else if (pairCount == 2 || symbol == '\n')
-                {
-                    break;
-                }
-
-                buffer.Append(symbol);
-                position++;
-            }
-
-            return buffer.ToString();
         }
 
         private string Parse(string code, int position, Func<char, bool> stopRule)
@@ -137,11 +91,14 @@ namespace CompilerDemo.Model
         {
             string symbol = code[position].ToString();
 
-            string firstCharacter = "<>=";
-            string secondCharacter = "=";
-            if (position < code.Length - 1 && firstCharacter.Contains(symbol) && secondCharacter.Contains(code[position + 1]))
+            string firstCharacter = "<>=&!|";
+            string secondCharacter = "=&|";
+            if (position < code.Length - 1)
             {
-                symbol += code[position + 1];
+                if (firstCharacter.Contains(symbol) && secondCharacter.Contains(code[position + 1]))
+                {
+                    symbol += code[position + 1];
+                }
             }
 
             return symbol;
