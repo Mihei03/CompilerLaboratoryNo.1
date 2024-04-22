@@ -24,7 +24,7 @@
                 <MenuItem Header="Вырезать" Command="ApplicationCommands.Cut"/>
                 <MenuItem Header="Копировать" Command="ApplicationCommands.Copy"/>
                 <MenuItem Header="Вставить" Command="ApplicationCommands.Paste"/>
-                <MenuItem Header="Удалить" Command="{Binding DeleteCommand}"/>
+                <MenuItem Header="Удалить" Click="DeleteButton_Click"/>
                 <MenuItem Header="Выделить все" Command="ApplicationCommands.SelectAll"/>
             </MenuItem>
             <MenuItem Header="Текст">
@@ -84,9 +84,7 @@
 
                 <Separator/>
 
-                <Button Click="CleanButton_Click">
-                    <Image Source="../Resources/Repair.png" Height="40" Width="38" />
-                </Button>
+
             </ToolBar>
         </ToolBarTray>
 

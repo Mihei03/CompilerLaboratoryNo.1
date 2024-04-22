@@ -294,7 +294,7 @@ namespace CompilerDemo.ViewModel
         private void Info()
         {
             var p = new Process();
-            p.StartInfo = new ProcessStartInfo(@"https://github.com/Mihei03/CompilerLaboratoryNo.1?tab=readme-ov-file#lab1")
+            p.StartInfo = new ProcessStartInfo(@"https://disk.yandex.ru/d/_C8OOCgYju_rFg")
             {
                 UseShellExecute = true
             };

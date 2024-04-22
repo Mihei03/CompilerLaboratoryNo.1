@@ -1,19 +1,23 @@
 {
   "version": 2,
-  "dgSpecHash": "1JJvTFxEFt1K5ZAZmBV8Hj5rsad6Gf92SF/WmJ5JbkDoaPBdsBVMu3hKqmfcEUpyElm3C2c+b0OlKAhzOGEWXg==",
+  "dgSpecHash": "PtVrqqyr6bseBh55nDK7BaR/26WPYPBkxONH+vMOPpzf31YlKWuqQUzblg7USGjJRbvWkCq/HviCMCEUvCL+Dg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\user\\source\\repos\\CompilerLaboratoryNo.1\\CompilerDemo.csproj",
+  "projectFilePath": "C:\\Users\\mihei\\Desktop\\CompilerLaboratoryNo.1\\CompilerDemo.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\user\\.nuget\\packages\\controlzex\\4.3.0\\controlzex.4.3.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\mahapps.metro\\2.0.0\\mahapps.metro.2.0.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\material.icons\\2.1.6\\material.icons.2.1.6.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\material.icons.wpf\\2.1.0\\material.icons.wpf.2.1.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\materialdesigncolors\\2.1.4\\materialdesigncolors.2.1.4.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\materialdesignextensions\\4.0.0-a02\\materialdesignextensions.4.0.0-a02.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\materialdesignthemes\\4.9.0\\materialdesignthemes.4.9.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\materialdesignthemes.mahapps\\0.3.0\\materialdesignthemes.mahapps.0.3.0.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
-    "C:\\Users\\user\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512"
+    "C:\\Users\\mihei\\.nuget\\packages\\controlzex\\4.3.0\\controlzex.4.3.0.nupkg.sha512",
+    "C:\\Users\\mihei\\.nuget\\packages\\mahapps.metro\\2.0.0\\mahapps.metro.2.0.0.nupkg.sha512",
+    "C:\\Users\\mihei\\.nuget\\packages\\material.icons\\2.1.6\\material.icons.2.1.6.nupkg.sha512",
+    "C:\\Users\\mihei\\.nuget\\packages\\material.icons.wpf\\2.1.0\\material.icons.wpf.2.1.0.nupkg.sha512",
+    "C:\\Users\\mihei\\.nuget\\packages\\materialdesigncolors\\2.1.4\\materialdesigncolors.2.1.4.nupkg.sha512",
+    "C:\\Users\\mihei\\.nuget\\packages\\materialdesignextensions\\4.0.0-a02\\materialdesignextensions.4.0.0-a02.nupkg.sha512",
+    "C:\\Users\\mihei\\.nuget\\packages\\materialdesignthemes\\4.9.0\\materialdesignthemes.4.9.0.nupkg.sha512",
+    "C:\\Users\\mihei\\.nuget\\packages\\materialdesignthemes.mahapps\\0.3.0\\materialdesignthemes.mahapps.0.3.0.nupkg.sha512",
+    "C:\\Users\\mihei\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
+    "C:\\Users\\mihei\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512",
+    "C:\\Users\\mihei\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.17\\microsoft.windowsdesktop.app.ref.7.0.17.nupkg.sha512",
+    "C:\\Users\\mihei\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.17\\microsoft.netcore.app.ref.7.0.17.nupkg.sha512",
+    "C:\\Users\\mihei\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.17\\microsoft.aspnetcore.app.ref.7.0.17.nupkg.sha512",
+    "C:\\Users\\mihei\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.17\\microsoft.netcore.app.host.win-x64.7.0.17.nupkg.sha512"
   ],
   "logs": []
 }

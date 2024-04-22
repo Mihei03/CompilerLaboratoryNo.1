@@ -9,7 +9,7 @@ namespace CompilerDemo.Model
     {
         public IEnumerable<Token> Scan(string code)
         {
-            if (code.Length == 0)
+            if (string.IsNullOrEmpty(code))
             {
                 return Enumerable.Empty<Token>();
             }
@@ -28,12 +28,12 @@ namespace CompilerDemo.Model
             } while (position < code.Length);
 
             List<Token> resultTokens = new List<Token>();
-            for (int i = 0; i < tokens.Count-1; i++)
+            for (int i = 0; i < tokens.Count - 1; i++)
             {
                 if ((tokens[i].Type == TokenType.Plus || tokens[i].Type == TokenType.Minus)
-                    && (tokens[i+1].Type == TokenType.DoubleLiteral || tokens[i + 1].Type == TokenType.IntegerLiteral))
+                    && (tokens[i + 1].Type == TokenType.DoubleLiteral || tokens[i + 1].Type == TokenType.IntegerLiteral))
                 {
-                    string rawNumber = tokens[i].RawToken + tokens[i+1].RawToken;
+                    string rawNumber = tokens[i].RawToken + tokens[i + 1].RawToken;
                     Token numberToken = new Token(rawNumber, tokens[i].StartPos);
                     resultTokens.Add(numberToken);
                     i++;
@@ -48,7 +48,8 @@ namespace CompilerDemo.Model
             return resultTokens;
         }
 
-        private string ParseToken(string code, int position)
+
+    private string ParseToken(string code, int position)
         {
             char symbol = code[position];
             string allowedIdentifierSymbols = "_:<>";

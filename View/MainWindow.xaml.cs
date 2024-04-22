@@ -153,5 +153,6 @@ namespace CompilerDemo
         {
             richTextBox.Document.Blocks.Clear();
         }
+
     }
 }
