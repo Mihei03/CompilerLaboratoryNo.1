@@ -22,19 +22,18 @@
                 ASSIGNTMENT -> complex OPEN 
                 OPEN -> ( REALPART 
                 REALPART -> [+ | -] INTREALPART 
-                INTREALPART -> digit0 INTREALPARTREM 
+                INTREALPART -> digit INTREALPARTREM 
                 INTREALPARTREM -> digit INTREALPARTREM | . DECIMALREALPART | , IMAGINARYPART 
                 DECIMALREALPART -> digit DECIMALREALPARTREM 
                 DECIMALREALPARTREM -> digit DECIMALREALPARTREM | , IMAGINARYPART
                 IMAGINARYPART -> [+ | -] INTIMAGINARYPART
-                INTIMAGINARYPART -> digit0 INTIMAGINARYPARTREM
-                INTIMAGINARYPARTREM -> digit INTIMAGINARYPARTREM | . DECIMALIMAGINARYPART
+                INTIMAGINARYPART -> digit INTIMAGINARYPARTREM
+                INTIMAGINARYPARTREM -> digit INTIMAGINARYPARTREM | . DECIMALIMAGINARYPART |  CLOSE 
                 DECIMALIMAGINARYPART -> digit DECIMALIMAGINARYPARTREM
                 DECIMALIMAGINARYPARTREM -> digit DECIMALIMAGINARYPARTREM |  CLOSE 
                 CLOSE -> )
                 letter → ‘a’ | ‘b’ | … | ‘z’ | ‘A’ | ‘B’ | … | ‘Z’
                 digit → ‘0’ | ‘1’ | … | ‘9’
-                digit0 →  ‘1’ | … | ‘9’
             }
           </pre>
         </br></br></br></br></br></br>
