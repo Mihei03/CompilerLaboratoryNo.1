@@ -16,6 +16,11 @@ namespace CompilerDemo.Model.Parser.States
             List<Token> errorBuffer = new List<Token>();
             foreach (Token token in tail.ToList())
             {
+                if(token.Type == TokenType.Semicolon)
+                {
+                    ParserUtils.CreateError(parser, token.EndPos, "Пропущено )");
+                    break;
+                }
                 if (token.Type != TokenType.CloseParenthesis)
                 {
                     errorBuffer.Add(token);

@@ -22,6 +22,10 @@ namespace CompilerDemo.Model
             do
             {
                 string rawToken = ParseToken(code, position);
+                if (rawToken.Contains("complex"))
+                {
+
+                }
                 tokens.Add(new Token(rawToken, position));
                 position += rawToken.Length;
 

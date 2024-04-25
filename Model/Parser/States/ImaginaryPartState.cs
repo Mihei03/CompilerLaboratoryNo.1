@@ -20,7 +20,7 @@ namespace CompilerDemo.Model.Parser.States
                 {
                     if (token == tokens.First() && errorBuffer.Count == 0)
                     {
-                        ParserUtils.CreateError(parser, token.StartPos, "Пропущено число с плавающей точкой");
+                        ParserUtils.CreateError(parser, token.StartPos, "Пропущено число");
                     }
                     break;
                 }
@@ -39,7 +39,7 @@ namespace CompilerDemo.Model.Parser.States
             states = states.Skip(1).ToList();
             if (tail.Count > 0)
             {
-                ParserUtils.CreateErrorFromBuffer(parser, errorBuffer, "Ожидалось число с плавающей точкой");
+                ParserUtils.CreateErrorFromBuffer(parser, errorBuffer, "Ожидалось число");
                 states.FirstOrDefault()?.Parse(parser, tail, states);
                 return;
             }

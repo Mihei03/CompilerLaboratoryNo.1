@@ -9,6 +9,10 @@ namespace CompilerDemo.Model.Parser.States
         {
             if (ParserUtils.TrimWhitespaceTokens(ref tokens) == false || states.Count == 0)
             {
+                if (tokens.Count == 0)
+                {
+                    ParserUtils.CreateError(parser, parser.Tokens.Last().EndPos, "Пропущено ;");
+                }
                 return;
             }
 

@@ -16,7 +16,7 @@ namespace CompilerDemo.Model.Parser.States
             List<Token> errorBuffer = new List<Token>();
             foreach (Token token in tail.ToList())
             {
-                if (token.Type == TokenType.DoubleLiteral)
+                if (token.Type == TokenType.DoubleLiteral || token.Type == TokenType.IntegerLiteral)
                 {
                     if (token == tokens.First() && errorBuffer.Count == 0)
                     {
@@ -26,6 +26,7 @@ namespace CompilerDemo.Model.Parser.States
                 }
                 if (token.Type != TokenType.OpenParenthesis)
                 {
+
                     errorBuffer.Add(token);
                     tail.Remove(token);
                 }
