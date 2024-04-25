@@ -17,10 +17,6 @@ namespace CompilerDemo.Model.Parser.States
             Token firstToken = tail.First();
             foreach (Token token in tail.ToList())
             {
-                if (token.Type == TokenType.OpenParenthesis)
-                {
-                    break;
-                }
                 if (token.Type != TokenType.Complex)
                 {
                     errorBuffer.Add(token);

@@ -14,16 +14,9 @@ namespace CompilerDemo.Model.Parser.States
 
             List<Token> tail = new List<Token>(tokens);
             List<Token> errorBuffer = new List<Token>();
+            Token firstToken = tail.First();
             foreach (Token token in tail.ToList())
             {
-                if (token.Type == TokenType.Assignment)
-                {
-                    if (token == tokens.First() && errorBuffer.Count == 0)
-                    {
-                        ParserUtils.CreateError(parser, token.StartPos, "Пропущен идентификатор");
-                    }
-                    break;
-                }
                 if (token.Type != TokenType.Identifier)
                 {
                     errorBuffer.Add(token);
@@ -44,6 +37,7 @@ namespace CompilerDemo.Model.Parser.States
                 return;
             }
 
+            ParserUtils.CreateError(parser, firstToken.StartPos, "Пропущен идентификатор");
             states.FirstOrDefault()?.Parse(parser, tokens, states);
         }
 
