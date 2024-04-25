@@ -14,6 +14,8 @@ namespace CompilerDemo.Model.Parser.States
 
             List<Token> tail = new List<Token>(tokens);
             List<Token> errorBuffer = new List<Token>();
+            Token firstToken = tail.First();
+            bool isFound = false;
             foreach (Token token in tail.ToList())
             {
                 if (token.Type != TokenType.CloseParenthesis)
@@ -24,6 +26,8 @@ namespace CompilerDemo.Model.Parser.States
                 else
                 {
                     tail.Remove(token);
+                    tokens.Remove(token);
+                    isFound = true;
                     break;
                 }
             }
@@ -31,9 +35,13 @@ namespace CompilerDemo.Model.Parser.States
             states = states.Skip(1).ToList();
             if (tail.Count > 0)
             {
-                ParserUtils.CreateErrorFromBuffer(parser, errorBuffer, "Ожидалось )");
+                //ParserUtils.CreateErrorFromBuffer(parser, errorBuffer, "Ожидалось )");
                 states.FirstOrDefault()?.Parse(parser, tail, states);
                 return;
+            }
+            if (isFound == false)
+            {
+                ParserUtils.CreateError(parser, firstToken.StartPos, "Пропущено )");
             }
 
             states.FirstOrDefault()?.Parse(parser, tokens, states);

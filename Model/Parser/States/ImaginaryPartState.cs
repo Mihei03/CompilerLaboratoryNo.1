@@ -14,16 +14,10 @@ namespace CompilerDemo.Model.Parser.States
 
             List<Token> tail = new List<Token>(tokens);
             List<Token> errorBuffer = new List<Token>();
+            Token firstToken = tail.First();
+            bool isFound = false;
             foreach (Token token in tail.ToList())
             {
-                if (token.Type == TokenType.CloseParenthesis)
-                {
-                    if (token == tokens.First() && errorBuffer.Count == 0)
-                    {
-                        ParserUtils.CreateError(parser, token.StartPos, "Пропущено число с плавающей точкой");
-                    }
-                    break;
-                }
                 if (token.Type != TokenType.DoubleLiteral && token.Type != TokenType.IntegerLiteral)
                 {
                     errorBuffer.Add(token);
@@ -31,7 +25,9 @@ namespace CompilerDemo.Model.Parser.States
                 }
                 else
                 {
-                    tail.Remove(tail.First());
+                    tail.Remove(token);
+                    tokens.Remove(token);
+                    isFound = true;
                     break;
                 }
             }
@@ -39,9 +35,13 @@ namespace CompilerDemo.Model.Parser.States
             states = states.Skip(1).ToList();
             if (tail.Count > 0)
             {
-                ParserUtils.CreateErrorFromBuffer(parser, errorBuffer, "Ожидалось число с плавающей точкой");
+                ParserUtils.CreateErrorFromBuffer(parser, errorBuffer, "Ожидалось мнимое");
                 states.FirstOrDefault()?.Parse(parser, tail, states);
                 return;
+            }
+            if (isFound == false)
+            {
+                ParserUtils.CreateError(parser, firstToken.StartPos, "Пропущено мнимое");
             }
 
             states.FirstOrDefault()?.Parse(parser, tokens, states);

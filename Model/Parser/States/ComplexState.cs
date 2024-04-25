@@ -7,23 +7,17 @@ namespace CompilerDemo.Model.Parser.States
     {
         public void Parse(Parser parser, List<Token> tokens, List<IParserState> states)
         {
-            if (ParserUtils.TrimWhitespaceTokens(ref tokens) == false || states.Count == 0 && states.Count == 0)
+            if (ParserUtils.TrimWhitespaceTokens(ref tokens) == false || states.Count == 0)
             {
                 return;
             }
 
             List<Token> tail = new List<Token>(tokens);
             List<Token> errorBuffer = new List<Token>();
+            Token firstToken = tail.First();
+            bool isFound = false;
             foreach (Token token in tail.ToList())
             {
-                if (token.Type == TokenType.OpenParenthesis)
-                {
-                    if (token == tokens.First() && errorBuffer.Count == 0)
-                    {
-                        ParserUtils.CreateError(parser, token.StartPos, "Пропущено complex");
-                    }
-                    break;
-                }
                 if (token.Type != TokenType.Complex)
                 {
                     errorBuffer.Add(token);
@@ -31,7 +25,9 @@ namespace CompilerDemo.Model.Parser.States
                 }
                 else
                 {
-                    tail.Remove(tail.First());
+                    tail.Remove(token);
+                    tokens.Remove(token);
+                    isFound = true;
                     break;
                 }
             }
@@ -43,7 +39,10 @@ namespace CompilerDemo.Model.Parser.States
                 states.FirstOrDefault()?.Parse(parser, tail, states);
                 return;
             }
-
+            if (isFound == false)
+            {
+                ParserUtils.CreateError(parser, firstToken.StartPos, "Пропущено complex");
+            }
             states.FirstOrDefault()?.Parse(parser, tokens, states);
         }
     }

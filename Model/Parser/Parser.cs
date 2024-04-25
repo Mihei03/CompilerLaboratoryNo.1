@@ -7,10 +7,11 @@ namespace CompilerDemo.Model.Parser
     internal class Parser
     {
         private List<ParseError> Errors { get; set; } = new List<ParseError>();
-            
+        public List<Token> Tokens = new List<Token>();
 
         public List<ParseError> Parse(List<Token> tokens)
         {
+            Tokens = tokens;
             List<IParserState> States = new List<IParserState>()
             {
                 new IdentifierState(),
@@ -25,19 +26,20 @@ namespace CompilerDemo.Model.Parser
             };
             Errors.Clear();
 
-            List<Token> line = tokens.TakeWhile(t => t.Type != TokenType.Newline).ToList();
-            tokens = tokens.SkipWhile(t => t.Type != TokenType.Newline).ToList();
-            tokens = tokens.SkipWhile(t => t.Type == TokenType.Newline).ToList();
+            List<Token> line = Tokens.TakeWhile(t => t.Type != TokenType.Newline).ToList();
+            Tokens = Tokens.SkipWhile(t => t.Type != TokenType.Newline).ToList();
+            Tokens = Tokens.SkipWhile(t => t.Type == TokenType.Newline).ToList();
             while (line.Count > 0)
             {
                 States.First().Parse(this, line, States.ToList());
-                if (line.Last().Type != TokenType.CloseParenthesis || line.Count < 8)
+                if (line.Last().Type != TokenType.Semicolon)
                 {
-                    ParserUtils.CreateError(this, line.Last().EndPos, "Незаконченное выражение");
+                    ParserUtils.CreateError(this, line.Last().EndPos, "Пропущено ;");
                 }
-                line = tokens.TakeWhile(t => t.Type != TokenType.Newline).ToList();
-                tokens = tokens.SkipWhile(t => t.Type != TokenType.Newline).ToList();
-                tokens = tokens.SkipWhile(t => t.Type == TokenType.Newline).ToList();
+
+                line = Tokens.TakeWhile(t => t.Type != TokenType.Newline).ToList();
+                Tokens = Tokens.SkipWhile(t => t.Type != TokenType.Newline).ToList();
+                Tokens = Tokens.SkipWhile(t => t.Type == TokenType.Newline).ToList();
             }
 
             return Errors;

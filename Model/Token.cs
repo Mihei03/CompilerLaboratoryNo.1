@@ -77,7 +77,7 @@ namespace CompilerDemo.Model
 
         private static bool IsIdentifier(string rawToken)
         {
-            if (rawToken == "std::complex<double>")
+            if (rawToken == "complex")
                 return false;
 
             return rawToken.Length != 0 && (char.IsLetter(rawToken.First()) || rawToken.First() == '_') && Regex.IsMatch(rawToken, "^[a-zA-Z0-9_]+$");
