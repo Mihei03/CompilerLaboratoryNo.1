@@ -9,10 +9,6 @@ namespace CompilerDemo.Model.Parser.States
         {
             if (ParserUtils.TrimWhitespaceTokens(ref tokens) == false || states.Count == 0)
             {
-                if (tokens.Count == 0)
-                {
-                    ParserUtils.CreateError(parser, parser.Tokens.Last().EndPos, "Пропущено ;");
-                }
                 return;
             }
 
@@ -32,15 +28,7 @@ namespace CompilerDemo.Model.Parser.States
                 }
             }
 
-            states = states.Skip(1).ToList();
-            if (tail.Count > 0)
-            {
-                ParserUtils.CreateErrorFromBuffer(parser, errorBuffer, "Ожидалось ;");
-                states.FirstOrDefault()?.Parse(parser, tail, states);
-                return;
-            }
-
-            states.FirstOrDefault()?.Parse(parser, tokens, states);
+            ParserUtils.CreateErrorFromBuffer(parser, errorBuffer, "Ожидалось ;");
         }
     }
 }

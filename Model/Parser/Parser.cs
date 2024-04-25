@@ -32,9 +32,9 @@ namespace CompilerDemo.Model.Parser
             while (line.Count > 0)
             {
                 States.First().Parse(this, line, States.ToList());
-                if (line.Count < 9 || line.Last().Type != TokenType.Semicolon)
+                if (line.Last().Type != TokenType.Semicolon)
                 {
-                    ParserUtils.CreateError(this, line.Last().EndPos, "Незаконченное выражение");
+                    ParserUtils.CreateError(this, line.Last().EndPos, "Пропущено ;");
                 }
 
                 line = Tokens.TakeWhile(t => t.Type != TokenType.Newline).ToList();
