@@ -294,7 +294,7 @@ namespace CompilerDemo.ViewModel
         private void Info()
         {
             var p = new Process();
-            p.StartInfo = new ProcessStartInfo(@"https://disk.yandex.ru/d/_C8OOCgYju_rFg")
+            p.StartInfo = new ProcessStartInfo(@"https://disk.yandex.ru/d/8tOLehrsWQav6A")
             {
                 UseShellExecute = true
             };

@@ -18,6 +18,10 @@ namespace CompilerDemo.Model.Parser.States
             bool isFound = false;
             foreach (Token token in tail.ToList())
             {
+                if (token.Type == TokenType.OpenParenthesis)
+                {
+                    break;
+                }
                 if (token.Type != TokenType.Complex)
                 {
                     errorBuffer.Add(token);

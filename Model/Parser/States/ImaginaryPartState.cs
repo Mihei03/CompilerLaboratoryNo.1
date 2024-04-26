@@ -22,6 +22,10 @@ namespace CompilerDemo.Model.Parser.States
                 {
                     break;
                 }
+                if (token.Type == TokenType.Semicolon)
+                {
+                    break;
+                }
                 if (token.Type != TokenType.DoubleLiteral && token.Type != TokenType.IntegerLiteral)
                 {
                     errorBuffer.Add(token);

@@ -18,6 +18,10 @@ namespace CompilerDemo.Model.Parser.States
             bool isFound = false;
             foreach (Token token in tail.ToList())
             {
+                if (token.Type == TokenType.Assignment)
+                {
+                    break;
+                }
                 if (token.Type != TokenType.Identifier)
                 {
                     errorBuffer.Add(token);
