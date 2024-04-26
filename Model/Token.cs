@@ -90,8 +90,6 @@ namespace CompilerDemo.Model
                 && (rawToken.StartsWith("0.") != !rawToken.StartsWith('0'))
                 && !rawToken.EndsWith('.');
         }
-        private static bool IsStringLiteral(string rawToken)
-            => rawToken.StartsWith("\"") && rawToken.EndsWith("\"") && !rawToken.Contains('\n') && rawToken.Length > 1;
 
         public static TokenType GetTokenType(string rawToken)
         {

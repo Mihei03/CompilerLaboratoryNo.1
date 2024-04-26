@@ -117,8 +117,8 @@
                             <DataGridTextColumn Header="Условный код" Binding="{Binding Code}"/>
                             <DataGridTextColumn Header="Тип лексемы" Width="*" Binding="{Binding TokenType}"/>
                             <DataGridTextColumn Header="Лексема" Width="*" Binding="{Binding RawToken}"/>
-                            <DataGridTextColumn Header="Начало лексемы" Width="*" Binding="{Binding StartPos}"/>
-                            <DataGridTextColumn Header="Конец лексемы" Width="*" Binding="{Binding EndPos}"/>
+                            <DataGridTextColumn Header="Начало лексемы" Width="*" Binding="{Binding StartIndex}"/>
+                            <DataGridTextColumn Header="Конец лексемы" Width="*" Binding="{Binding EndIndex}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>
