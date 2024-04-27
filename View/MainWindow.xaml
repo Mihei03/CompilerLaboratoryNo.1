@@ -42,6 +42,11 @@
                 <MenuItem Header="Вызов справки" Command="{Binding ReferenceCommand}"/>
                 <MenuItem Header="О программе" Command="{Binding AboutProgramCommand}"/>
             </MenuItem>
+            <MenuItem Header="Найти подстроки">
+                <MenuItem Header="Российские почтовые индексы" Click="FindPostalCodes_Click"/>
+                <MenuItem Header="Шестнадцатеричные числа" Click="FindHexNumbers_Click"/>
+                <MenuItem Header="Проверка надежности пароля" Click="FindPasswordPatterns_Click"/>
+            </MenuItem>
         </Menu>
 
         <ToolBarTray DockPanel.Dock="Top" Height="65">
@@ -119,6 +124,14 @@
                             <DataGridTextColumn Header="Лексема" Width="*" Binding="{Binding RawToken}"/>
                             <DataGridTextColumn Header="Начало лексемы" Width="*" Binding="{Binding StartIndex}"/>
                             <DataGridTextColumn Header="Конец лексемы" Width="*" Binding="{Binding EndIndex}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+                <TabItem Header="Вывод">
+                    <DataGrid x:Name="OutputDataGrid" ItemsSource="{Binding MatchResults}" IsReadOnly="True" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Найденная подстрока:" Binding="{Binding Substring}"/>
+                            <DataGridTextColumn Header="Позиция:" Binding="{Binding Position}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </TabItem>

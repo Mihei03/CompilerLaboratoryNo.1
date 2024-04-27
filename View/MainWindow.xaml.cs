@@ -154,5 +154,19 @@ namespace CompilerDemo
             richTextBox.Document.Blocks.Clear();
         }
 
+        private void FindPostalCodes_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)DataContext).FindPostalCodes();
+        }
+
+        private void FindHexNumbers_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)DataContext).FindHexNumbers();
+        }
+
+        private void FindPasswordPatterns_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)DataContext).FindPasswordPatterns();
+        }
     }
 }

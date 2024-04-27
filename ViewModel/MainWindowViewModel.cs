@@ -9,6 +9,10 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using System.Text.RegularExpressions;
+using System;
+using System.Text;
+using System.Windows.Controls;
 
 namespace CompilerDemo.ViewModel
 {
@@ -31,6 +35,7 @@ namespace CompilerDemo.ViewModel
         }
 
         public ICommand NeutralizationCommand { get; }
+        public ICommand FindSubstringsCommand { get; }
         public ICommand RunCommand { get; }
         public ICommand CreateCommand { get; }
         public ICommand OpenCommand { get; }
@@ -66,6 +71,19 @@ namespace CompilerDemo.ViewModel
             AboutProgramCommand = new RelayCommand(AboutProgram);
         }
 
+        private ObservableCollection<MatchResult> _matchResults = new ObservableCollection<MatchResult>();
+
+        public ObservableCollection<MatchResult> MatchResults
+        {
+            get { return _matchResults; }
+            set { _matchResults = value; OnPropertyChanged(); }
+        }
+
+        public class MatchResult
+        {
+            public string Substring { get; set; }
+            public int Position { get; set; }
+        }
         private void Run()
         {
             Scan();
@@ -315,6 +333,56 @@ namespace CompilerDemo.ViewModel
         {
             get { return _parsingError; }
             set { _parsingError = value; OnPropertyChanged(); }
+        }
+
+        public void FindMatchingSubstrings(string text, string pattern)
+        {
+            MatchResults.Clear();
+
+            if (string.IsNullOrEmpty(text))
+            {
+                MatchResults.Add(new MatchResult { Substring = "Текст не введен.", Position = -1 });
+                return;
+            }
+
+            Regex regex = new Regex(pattern);
+            MatchCollection matches = regex.Matches(text);
+
+            if (matches.Count > 0)
+            {
+                foreach (Match match in matches)
+                {
+                    MatchResults.Add(new MatchResult { Substring = match.Value, Position = match.Index });
+                }
+            }
+            else
+            {
+                MatchResults.Add(new MatchResult { Substring = "Совпадений не найдено.", Position = 0 });
+            }
+        }
+
+        public void FindPostalCodes()
+        {
+            string text = Text;
+            string pattern = @"\b\d{6}\b";
+
+            FindMatchingSubstrings(text, pattern);
+        }
+
+        public void FindHexNumbers()
+        {
+            string text = Text;
+            string pattern = @"\b(0x)?[0-9A-Fa-f]+\b";
+
+            FindMatchingSubstrings(text, pattern);
+        }
+
+        public void FindPasswordPatterns()
+        {
+            string text = Text;
+            string pattern = @"\b(?!(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@#!%?_/\^&*\-])[A-Za-z\d$@#!%?_/\^&*\-]{10,}$)(?=.*[\W_])(?!.*[а-яёА-ЯЁ])(?!.*[\\"", , . ,№;:\(\)\']).*";
+
+            FindMatchingSubstrings(text, pattern);
         }
     }
 }
