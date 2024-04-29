@@ -32,7 +32,7 @@ namespace CompilerDemo.Model.Parser
             while (line.Count > 0)
             {
                 States.First().Parse(this, line, States.ToList());
-                if (line.Last().Type != TokenType.Semicolon)
+                if (line.Last().Type != TokenType.Semicolon && !line.Any(_=>_.Type == TokenType.Semicolon))
                 {
                     ParserUtils.CreateError(this, line.Last().EndPos, "Пропущено ;");
                 }
