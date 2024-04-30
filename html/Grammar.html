@@ -13,25 +13,26 @@
         <p style="margin-bottom: 30px;">Грамматика.</p>
         </br>
         <pre>
-            G[<КЧ> = <Комплексное_число>]: 
+            G[&lt;COMPLEX&gt; = &lt;Комплексное_число&gt;]: 
             VT = { ‘a’…’z’, ‘A’…’Z’, '=', 'complex', '(', ')', '+', '-', '0'...'9', '.', ‘_’, ‘'‘ }
-            VN = { <КЧ>, COMPLEXREM, ASSIGNTMENT, OPEN, REALPART, INTREALPART, INTREALPARTREM, DECIMALREALPART, IMAGINARYPART, DECIMALREALPARTREM, INTIMAGINARYPART, INTIMAGINARYPARTREM, DECIMALIMAGINARYPART, DECIMALIMAGINARYPARTREM, EXIT}
+            VN = { COMPLEX, COMPLEXREM, ASSIGNTMENT, OPEN, REALPART, INTREALPART, INTREALPARTREM, DECIMALREALPART, IMAGINARYPART, DECIMALREALPARTREM, INTIMAGINARYPART, INTIMAGINARYPARTREM, DECIMALIMAGINARYPART, DECIMALIMAGINARYPARTREM, EXIT}
             P = {
-                <КЧ> -> letter COMPLEXREM
-                COMPLEXREM -> (letter | _ | digit) COMPLEXREM | = ASSIGNTMENT
-                ASSIGNTMENT -> complex OPEN 
-                OPEN -> ( REALPART 
-                REALPART -> [+ | -] INTREALPART 
-                INTREALPART -> digit INTREALPARTREM 
-                INTREALPARTREM -> digit INTREALPARTREM | . DECIMALREALPART | , IMAGINARYPART 
-                DECIMALREALPART -> digit DECIMALREALPARTREM 
-                DECIMALREALPARTREM -> digit DECIMALREALPARTREM | , IMAGINARYPART
-                IMAGINARYPART -> [+ | -] INTIMAGINARYPART
-                INTIMAGINARYPART -> digit INTIMAGINARYPARTREM
-                INTIMAGINARYPARTREM -> digit INTIMAGINARYPARTREM | . DECIMALIMAGINARYPART |  ) EXIT 
-                DECIMALIMAGINARYPART -> digit DECIMALIMAGINARYPARTREM
-                DECIMALIMAGINARYPARTREM -> digit DECIMALIMAGINARYPARTREM |  ) EXIT 
-                EXIT-> ;
+                &lt;COMPLEX&gt; -&gt; letter &lt;COMPLEXREM&gt; 
+                &lt;COMPLEXREM&gt; -&gt; letter &lt;COMPLEXREM&gt; | "_" &lt;COMPLEXREM&gt; | digit &lt;COMPLEXREM&gt; | "=" &lt;ASSIGNTMENT&gt;
+                &lt;ASSIGNTMENT&gt; -&gt; "complex" &lt;OPEN&gt; 
+                &lt;OPEN&gt; -&gt; "(" &lt;REALPART&gt;
+                &lt;REALPART&gt; -&gt; ["+" | "-"] &lt;INTREALPART&gt; 
+                &lt;INTREALPART&gt; -&gt; digit &lt;INTREALPARTREM&gt; 
+                &lt;INTREALPARTREM&gt; -&gt; digit &lt;INTREALPARTREM&gt; | "." &lt;DECIMALREALPART&gt; | "," &lt;IMAGINARYPART&gt;
+                &lt;DECIMALREALPART&gt; -&gt; digit &lt;DECIMALREALPARTREM&gt; 
+                &lt;DECIMALREALPARTREM&gt; -&gt; digit &lt;DECIMALREALPARTREM&gt; | "," &lt;IMAGINARYPART&gt;
+                &lt;IMAGINARYPART&gt; -&gt; ["+" | "-"] &lt;INTIMAGINARYPART&gt;
+                &lt;INTIMAGINARYPART&gt; -&gt; digit &lt;INTIMAGINARYPARTREM&gt;
+                &lt;INTIMAGINARYPARTREM&gt; -&gt; digit &lt;INTIMAGINARYPARTREM&gt; | "." &lt;DECIMALIMAGINARYPART&gt; | ")" &lt;EXIT&gt;
+                &lt;DECIMALIMAGINARYPART&gt; -&gt; digit &lt;DECIMALIMAGINARYPARTREM&gt;
+                &lt;DECIMALIMAGINARYPARTREM&gt; -&gt; digit &lt;DECIMALIMAGINARYPARTREM&gt; | ")" &lt;EXIT&gt;
+                &lt;EXIT&gt; -&gt; ";"
+                    
                 letter → ‘a’ | ‘b’ | … | ‘z’ | ‘A’ | ‘B’ | … | ‘Z’
                 digit → ‘0’ | ‘1’ | … | ‘9’
             }
